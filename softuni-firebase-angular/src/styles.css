@@ -3,6 +3,7 @@
 /* Add this style to remove empty space at the edges */
 body,
 html {
+  color: white;
   width: 100%;
   height: 100%;
   margin: 0px;

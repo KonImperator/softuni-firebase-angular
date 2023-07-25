@@ -1,64 +1,72 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 :host {
-    font-family: 'VT323', monospace;
-    line-height: 0.7;
-  }
+  font-family: 'VT323', monospace;
+  line-height: 0.7;
+}
 
-  h1 {
-    font-size: 50px;
-    color: #ff4500;
-  }
-  
-  ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-  }
-  
-  nav a {
-    font-size: 27px;
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: black;
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    letter-spacing: 1px;
-    transition: background-color 0.3s ease;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-  }
-  
-  nav a:hover {
-    background-color: #ff5722;
-    transform: scale(1.05); /* Slightly scale up the button on hover */
-    box-shadow: 0px 0px 10px rgba(255, 69, 0, 0.6); /* Add a glowing effect on hover */
-  }
+h1 {
+  font-size: 50px;
+  color: #ff4500;
+}
 
-  .socials {
-    margin-right: 15px;
-  }
-  
-  .socials a {
-    padding: 0;
-  }
+ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
 
-  .socials img {
-    margin-right: 20px;
-    height: 32px;
-  }
+a {
+  cursor: pointer;
+}
 
-  .wrapper {
-    height: 80px;
-    background-color: black;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+nav {
+  margin-left: -100px
+}
 
-  .logo {
-    margin-left: 30px;
-  }
+
+nav a {
+  font-size: 27px;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease;
+  text-shadow: 1px 1px 3px rgba(62, 245, 255, 0.593);
+}
+
+nav a:hover {
+  background-color: #ff5722;
+  transform: scale(1.05);
+  box-shadow: 0px 0px 10px rgba(255, 69, 0, 0.6);
+}
+
+.socials {
+  margin-right: 15px;
+}
+
+.socials img {
+  margin-right: 20px;
+  height: 32px;
+}
+
+.wrapper {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-left: 30px;
+}
+
+.logo a {
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -1,7 +1,8 @@
 .footer {
   text-align: center;
+  background-color: #000000;
   color: #fff;
   width: 100%;
   position: absolute;
-  flex-wrap: wrap;
+  bottom: 0;
 }

@@ -1,4 +1,13 @@
 {
+  "targets": {
+    "softuni-firebase-angular": {
+      "hosting": {
+        "softuni-firebase-angular": [
+          "softuni-firebase-angular"
+        ]
+      }
+    }
+  },
   "projects": {
     "default": "softuni-firebase-angular"
   }
