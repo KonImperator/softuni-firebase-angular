@@ -1,0 +1,21 @@
+<div class="genre-wrapper">
+    <ng-container *ngIf="!(genres | async)">
+        <app-spinner></app-spinner>
+    </ng-container>
+    <ng-container *ngIf="genres | async as genresData">
+        <ng-container *ngIf="genresData.data as data">
+            <h2 class="title">Genres</h2>
+            <section class="genre-container">
+                <a routerLink="/genre/{{genre.mal_id}}" *ngFor="let genre of (data | slice:0:18) ">{{genre.name}}</a>
+            </section>
+            <h2 class="title">Explicit</h2>
+            <section class="genre-container">
+                <a routerLink="/genre/{{genre.mal_id}}" *ngFor="let genre of (data | slice:18:21) ">{{genre.name}}</a>
+            </section>
+            <h2 class="title">Themes</h2>
+            <section class="genre-container">
+                <a routerLink="/genre/{{genre.mal_id}}" *ngFor="let genre of (data | slice:21) ">{{genre.name}}</a>
+            </section>
+        </ng-container>
+    </ng-container>
+</div>

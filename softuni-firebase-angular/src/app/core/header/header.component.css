@@ -2,7 +2,8 @@
 
 :host {
   font-family: 'VT323', monospace;
-  line-height: 0.7;
+  line-height: 1;
+  width: 50%
 }
 
 h1 {
@@ -10,25 +11,12 @@ h1 {
   color: #ff4500;
 }
 
-ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-}
-
 a {
   cursor: pointer;
 }
 
-nav {
-  margin-left: -100px
-}
-
-
-nav a {
+.navbar-center a {
+  border-radius: 0;
   font-size: 27px;
   display: inline-block;
   padding: 10px 20px;
@@ -37,36 +25,16 @@ nav a {
   font-weight: bold;
   letter-spacing: 1px;
   transition: background-color 0.3s ease;
-  text-shadow: 1px 1px 3px rgba(62, 245, 255, 0.593);
 }
 
-nav a:hover {
+.navbar-center a:hover {
   background-color: #ff5722;
   transform: scale(1.05);
   box-shadow: 0px 0px 10px rgba(255, 69, 0, 0.6);
 }
 
-.socials {
-  margin-right: 15px;
-}
-
 .socials img {
   margin-right: 20px;
   height: 32px;
-}
-
-.wrapper {
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  margin-left: 30px;
-}
-
-.logo a {
-  text-decoration: none;
-  cursor: pointer;
+  min-width: 32px;
 }

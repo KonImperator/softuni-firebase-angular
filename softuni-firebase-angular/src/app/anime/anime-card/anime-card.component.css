@@ -1,0 +1,34 @@
+.anime-card {
+    display: flex;
+    border: 1px solid #000;
+    margin: 20px;
+    padding: 20px;
+  }
+  
+  .anime-card-image {
+    width: 200px;
+    height: 450px;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+  
+  .anime-card-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .anime-card-title {
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .anime-card-detail {
+    margin-bottom: 5px;
+    font-size: 16px;
+  }
+  
+  .anime-card-synopsis {
+    margin: 10px 0;
+    font-style: italic;
+  }

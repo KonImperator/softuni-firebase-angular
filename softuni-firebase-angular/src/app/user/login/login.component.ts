@@ -1,16 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
-export class LoginComponent /* implements OnInit */ {
+export class LoginComponent {
+  constructor(private userService: UserService, private fb: FormBuilder, private router: Router) {}
+  form: FormGroup = this.fb.group({
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
+  });
 
-  // constructor(private userService: UserService){}
+  isLoading: boolean = false;
+  error: string | null = null;
 
-  // ngOnInit(): void {
-  //   this.userService.login('banana_man97@abv.bg', '710422')
-  // }
+  onSubmit() {
+    if (this.form.invalid) {
+      return alert('Invalid input');
+    }
+    this.error = null;
+    this.isLoading = true;
+
+    this.userService
+      .login(this.form.value.email, this.form.value.password)
+      .then(() => this.router.navigate(['/']))
+      .catch((err) => {
+        this.error = err.message;
+        setTimeout(() => {
+          this.error = null;
+        }, 5000);
+      })
+      .finally(() => (this.isLoading = false));
+  }
 }

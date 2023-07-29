@@ -1,0 +1,6 @@
+<ng-container *ngIf="!animeList">
+    <app-spinner></app-spinner>
+</ng-container>
+<ng-container *ngIf="animeList">
+    <app-anime-card *ngFor="let anime of animeList.data" [anime]="anime"></app-anime-card>
+</ng-container>

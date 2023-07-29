@@ -1,0 +1,15 @@
+<div *ngIf="anime" class="anime-card">
+    <img class="anime-card-image" [src]="anime.images.webp.large_image_url" alt="Anime title">
+    <div class="anime-card-details">
+      <h2 class="anime-card-title">Anime Title: {{anime.title}}</h2>
+      <p class="anime-card-detail"><strong>Episodes: </strong>{{anime.episodes}}</p>
+      <p class="anime-card-detail"><strong>Date Aired: </strong>{{anime.aired.string}}</p>
+      <p class="anime-card-synopsis">Summary: {{anime.synopsis}}</p>
+      <p class="anime-card-detail"><strong>Score:</strong> {{anime.score}}</p>
+      <p class="anime-card-detail"><strong>Viewers:</strong> {{anime.members}}</p>
+      <p class="anime-card-detail"><strong>Studio:</strong> {{anime.studios[0].name}}</p>
+      <p class="anime-card-detail"><strong>Source:</strong> {{anime.source}} </p>
+      <p class="anime-card-detail"><strong>Genre:</strong> {{anime.genres}}</p>
+    </div>
+  </div>
+  

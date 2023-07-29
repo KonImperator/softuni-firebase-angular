@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GenreComponent } from './genre/genre.component';
+import { AnimeListComponent } from './anime-list/anime-list.component';
+import { GenreListComponent } from './genre-list/genre-list.component';
 
 const routes: Routes = [
   {
-    path: 'genre', pathMatch: 'full', component: GenreComponent
+    path: 'genre', pathMatch: 'full', component: GenreListComponent
   },
+  {
+    path: 'anime', pathMatch: 'full', component: AnimeListComponent
+  }
 ];
 
 @NgModule({
