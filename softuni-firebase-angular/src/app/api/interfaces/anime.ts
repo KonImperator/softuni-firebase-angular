@@ -1,12 +1,9 @@
-/* exporting AnimeData and AnimeList as data types for anime from
-   the jikan api (single anime and list) segragated into smaller interfaces below */
-
 export interface AnimeList {
   pagination: Pagination;
   data: AnimeData[];
 }
 
-interface Pagination {
+export interface Pagination {
   last_visible_page: number;
   has_next_page: boolean;
   current_page: number;
@@ -20,7 +17,7 @@ interface Pagination {
 export interface AnimeData {
   mal_id: number;
   url: string;
-  images: ImageData;
+  images: ImageData | null;
   trailer: TrailerData;
   approved: boolean;
   titles: Title[];
@@ -33,7 +30,7 @@ export interface AnimeData {
   episodes: number;
   status: string;
   airing: boolean;
-  aired: AiredData;
+  aired: AiredData | null;
   duration: string;
   rating: string;
   score: number;
@@ -47,9 +44,9 @@ export interface AnimeData {
   season: string;
   year: number;
   broadcast: BroadcastData;
-  producers: Producer[];
-  licensors: Licensors[];
-  studios: Studios[];
+  producers: Producer[] | null;
+  licensors: Licensors[] | null;
+  studios: Studios[] | null;
   genres: Genre[] | string;
   explicit_genres: any[];
   themes: Theme[];

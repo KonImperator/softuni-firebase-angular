@@ -1,15 +1,15 @@
-<div class="mx-auto flex w-full max-w-sm flex-col gap-6">
+<div class="wrapper mx-auto flex w-full max-w-sm flex-col gap-6">
     <div class="flex flex-col items-center">
-        <h1 class="text-3xl font-semibold">Sign up</h1>
+        <h1 class="text-3xl font-semibold">Register</h1>
         <p class="text-sm">Create a new account</p>
     </div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-group">
         <div class="form-field">
             <label class="form-label"
                 [ngClass]="{'text-error': form.get('email')?.touched && form.get('email')?.errors}">
-                Email
+                Email address
             </label>
-            <input type="text" name="email" id="email" formControlName="email" placeholder="Enter your email" class="input max-w-full"
+            <input type="text" name="email" id="email" formControlName="email" placeholder="Enter your email" class="input max-w-full input-ghost-primary"
                 [ngClass]="{'input-error': form.get('email')?.touched && form.get('email')?.errors}"/>
             <ng-container *ngIf="form.get('email')?.touched">
                 <span *ngIf="form.get('email')?.errors?.['required']" class="form-label-alt text-error">Email is
@@ -22,7 +22,7 @@
                 [ngClass]="{'text-error': form.get('username')?.touched && form.get('username')?.errors }">
                 Username
             </label>
-            <input type="text" name="username" id="username" formControlName="username" placeholder="Enter your username" class="input max-w-full"
+            <input type="text" name="username" id="username" formControlName="username" placeholder="Enter your username" class="input max-w-full input-ghost-primary"
                 [ngClass]="{'input-error': form.get('username')?.touched && form.get('username')?.errors}"/>
             <ng-container *ngIf="form.get('username')?.touched">
                 <span *ngIf="form.get('username')?.errors?.['required']" class="form-label-alt text-error">Username is required.</span>
@@ -37,7 +37,7 @@
                     Password
                 </label>
                 <input type="password" name="password" id="password" formControlName="password"
-                    placeholder="Enter your password" class="input max-w-full"
+                    placeholder="Enter your password" class="input max-w-full input-ghost-primary"
                     [ngClass]="{'input-error': form.get('passwords')?.get('password')?.touched && form.get('passwords')?.get('password')?.errors}"/>
                 <ng-container *ngIf="form.get('passwords')?.get('password')?.touched">
                     <span *ngIf="form.get('passwords')?.get('password')?.errors?.['required']" class="form-label-alt text-error">Password is required.</span>
@@ -50,7 +50,7 @@
                     Repeat Password
                 </label>
                 <input type="password" name="rePass" id="rePass" formControlName="rePass"
-                    placeholder="Repeat your password" class="input max-w-full"
+                    placeholder="Repeat your password" class="input max-w-full input-ghost-primary"
                     [ngClass]="{'input-error': form.get('passwords')?.get('rePass')?.touched && (form.get('passwords')?.get('rePass')?.errors || form.get('passwords')?.errors)}"/>
                 <ng-container *ngIf="form.get('passwords')?.get('rePass')?.touched">
                     <span *ngIf="form.get('passwords')?.get('rePass')?.errors?.['required']" class="form-label-alt text-error">Repeat password is required.</span>
@@ -66,7 +66,7 @@
         </div>
         <div class="form-field">
             <div class="form-control justify-center">
-                <a class="link link-underline-hover link-primary text-sm">Already have an account? Sign in.</a>
+                <a routerLink="/user/login" class="link link-primary link-ghost-primary text-sm">Already have an account? Sign in.</a>
             </div>
         </div>
     </form>

@@ -4,6 +4,7 @@ import { HomeComponent } from './core/home/home.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
+  { path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)}
   // { path: '**', component: HomeComponent },
   // 404 ERROR COMPONENT TO MAKE
 ];

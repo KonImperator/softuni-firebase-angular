@@ -2,5 +2,9 @@
     <app-spinner></app-spinner>
 </ng-container>
 <ng-container *ngIf="animeList">
-    <app-anime-card *ngFor="let anime of animeList.data" [anime]="anime"></app-anime-card>
+    <app-pagination [animeList]="animeList"></app-pagination>
+    <div class="anime-list">
+        <app-anime-card *ngFor="let anime of animeList.data" [anime]="anime"></app-anime-card>
+    </div>
+    <app-pagination [animeList]="animeList"></app-pagination>
 </ng-container>

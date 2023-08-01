@@ -1,34 +1,45 @@
 .anime-card {
-    display: flex;
-    border: 1px solid #000;
-    margin: 20px;
-    padding: 20px;
-  }
-  
-  .anime-card-image {
-    width: 200px;
-    height: 450px;
-    object-fit: cover;
-    margin-right: 20px;
-  }
-  
-  .anime-card-details {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .anime-card-title {
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  .anime-card-detail {
-    margin-bottom: 5px;
-    font-size: 16px;
-  }
-  
-  .anime-card-synopsis {
-    margin: 10px 0;
-    font-style: italic;
-  }
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-size: 13px;
+  border: 1px solid #ff5722;
+  max-width: 30vw;
+  height: 400px;
+  margin: 20px;
+  padding: 20px;
+}
+
+.image-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.anime-card-image {
+  width: 200px;
+  height: 300px;
+  object-fit: cover;
+}
+
+.btn-details {
+  margin-top: 15px;
+}
+
+.anime-card-details {
+  padding-left: 20px;
+}
+
+.anime-card-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.anime-card-detail {
+  margin-bottom: 5px;
+}
+
+.anime-card-synopsis {
+  margin: 10px 0;
+  font-style: italic;
+}

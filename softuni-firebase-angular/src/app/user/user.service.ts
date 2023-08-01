@@ -24,13 +24,12 @@ import { Observable, Subscription } from 'rxjs';
   providedIn: 'root',
 })
 export class UserService implements OnDestroy, OnInit {
-  private auth: Auth = inject(Auth);
-  private firestore: Firestore = inject(Firestore);
 
   user$: Observable<User | null> = user(this.auth);
   userDocRef: DocumentReference | null;
   userSubscription: Subscription;
-  constructor() {
+  
+  constructor(private auth: Auth, private firestore: Firestore) {
     this.userSubscription = this.user$.subscribe();
   }
 

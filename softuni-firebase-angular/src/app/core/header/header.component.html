@@ -5,12 +5,12 @@
         </a>
     </div>
     <div class="navbar-center">
-        <a class="navbar-item" routerLink="/">Home</a>
-        <a class="navbar-item" routerLink="/anime">Anime List</a>
-        <a class="navbar-item" routerLink="/genre">Genres</a>
+        <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/">Home</a>
+        <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/anime">Anime</a>
+        <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/anime/genre">Genres</a>
         <ng-container *ngIf="!(user$ | async)">
-            <a class="navbar-item" routerLink="/user/login">Login</a>
-            <a class="navbar-item" routerLink="/user/register">Register</a>
+            <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/user/login">Login</a>
+            <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/user/register">Register</a>
         </ng-container>
         <ng-container *ngIf="(user$ | async)">
             <a class="navbar-item" (click)="onLogout()">Logout</a>
