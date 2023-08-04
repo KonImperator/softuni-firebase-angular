@@ -1,0 +1,9 @@
+:host {
+    width: 75%;
+    margin-top: 1.75rem;
+    margin-left: 4rem;
+}
+
+.input-flex-grow {
+    max-width: none;
+  }

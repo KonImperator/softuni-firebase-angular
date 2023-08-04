@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, shareReplay } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { AnimeData, AnimeList, Genre } from './interfaces/anime';
+import { AnimeData, AnimeList } from './interfaces/anime';
 import { SingularGenre } from './interfaces/genre';
 
 const { dataApiUrl } = environment;
@@ -18,17 +18,27 @@ export class JikanDataService {
     this.genres$ = this.getGenres$().pipe(shareReplay(1))
   }
 
-  formatGenres(animeData: AnimeList): any {
+  formatGenres<T extends {data: AnimeData } | AnimeList>(animeData: T): T {
+    if ('pagination' in animeData){
     const newData = animeData.data.map((data) => {
       return typeof data.genres === 'string'
         ? data
         : { ...data, genres: data.genres
-              .map((genre: Genre) => genre.name)
+              .map((genre) => genre.name)
               .join(', '),
           };
     });
     return { ...animeData, data: newData };
+  } else {
+    const newData = { 
+      ...animeData.data, 
+      genres: typeof animeData.data.genres === 'string' ? 
+      animeData.data.genres : 
+      animeData.data.genres.map((genre) => genre.name).join(', ')
+    }
+    return { data: newData } as T;
   }
+}
 
   getGenres$(): Observable<{ data: SingularGenre[] }> {
     return this.http.get<{ data: SingularGenre[] }>(`${dataApiUrl}genres/anime`);
@@ -44,6 +54,6 @@ export class JikanDataService {
   }
 
   getAnimeById(id: number): Observable<{data: AnimeData }> {
-    return this.http.get<{data: AnimeData }>(`${dataApiUrl}anime/${id}`);
+    return this.http.get<{data: AnimeData }>(`${dataApiUrl}anime/${id}`).pipe(map(this.formatGenres))
   }
 }

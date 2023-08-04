@@ -1,4 +1,4 @@
-<div class="wrapper mx-auto flex w-full max-w-sm flex-col gap-6">
+<div class="wrapper mx-auto flex w-full max-w-sm flex-col gap-6 h-full mt-14">
     <div class="flex flex-col items-center">
         <h1 class="text-3xl font-semibold">Register</h1>
         <p class="text-sm">Create a new account</p>
@@ -71,77 +71,3 @@
         </div>
     </form>
 </div>
-
-
-
-<!-- <div class="wrapper">
-    <div class="container">
-        <h1 class="title">Register</h1>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="register-form">
-            <div class="form-control">
-                <label for="email">Email</label>
-                <input type="text" name="email" id="email" formControlName="email" placeholder="Enter your email">
-            </div>
-            <ng-container *ngIf="form.get('email')?.touched">
-                <p *ngIf="form.get('email')?.errors?.['required']" class="error">
-                    Email is required
-                </p>
-                <p *ngIf="form.get('email')?.errors?.['email']" class="error">
-                    Email is invalid
-                </p>
-            </ng-container>
-            <div class="form-control">
-                <label for="username">Username</label>
-                <input type="text" name="username" id="username" formControlName="username"
-                    placeholder="Enter your username">
-            </div>
-            <ng-container *ngIf="form.get('username')?.touched">
-                <p *ngIf="form.get('username')?.errors?.['required']" class="error">
-                    Username is required
-                </p>
-                <p *ngIf="form.get('username')?.errors?.['minlength']" class="error">
-                    Username must be at least {{form.get('username')?.errors?.['minlength'].requiredLength}} characters
-                    long
-                </p>
-            </ng-container>
-            <ng-container formGroupName="passwords">
-                <div class="form-control">
-                    <label for="password">Password</label>
-                    <input type="password" name="password" id="password" formControlName="password"
-                        placeholder="Enter your password">
-                </div>
-                <ng-container *ngIf="form.get('passwords')?.get('password')?.touched">
-                    <p *ngIf="form.get('passwords')?.get('password')?.errors?.['required']" class="error">
-                        Password is required
-                    </p>
-                    <p *ngIf="form.get('passwords')?.get('password')?.errors?.['pattern']" class="error">
-                        Password must contain at least one number and one uppercase and lowercase letter, and at least 8
-                        or more characters
-                    </p>
-                </ng-container>
-                <div class="form-control">
-                    <label for="rePass">Repeat Password</label>
-                    <input type="password" name="rePass" id="rePass" formControlName="rePass"
-                        placeholder="Repeat your password">
-                </div>
-                <ng-container *ngIf="form.get('passwords')?.get('rePass')?.touched">
-                    <p *ngIf="form.get('passwords')?.get('rePass')?.errors?.['required']" class="error">
-                        Repeat password is required
-                    </p>
-                    <p *ngIf="form.get('passwords')?.errors?.['passwordInvalid']" class="error">
-                        Passwords must match
-                    </p>
-                </ng-container>
-            </ng-container>
-            <ng-container *ngIf="error">
-                <p class="error">
-                    {{error}}
-                </p>
-            </ng-container>
-            <button [disabled]="form.invalid" type="submit" class="register-btn">Register</button>
-            <ng-container *ngIf="isLoading">
-                <app-spinner></app-spinner>
-            </ng-container>
-        </form>
-    </div>
-</div> -->

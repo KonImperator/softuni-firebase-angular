@@ -1,0 +1,57 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-group w-9/12 ml-16 mt-7">
+    <div class="text-center mr-20 text-3xl">
+        <h2 class="">Profile</h2>
+    </div>
+    <div class="form-field flex flex-row items-center">
+        <label for="joinDate" class="w-3/12">
+            Join Date
+        </label>
+        <input disabled id="joinDate" class="input input-flex-grow w-5/12">
+    </div>
+    <div class="form-field flex flex-row items-center">
+        <label class="w-3/12"
+            [ngClass]="{'text-error': form.get('email')?.touched && form.get('email')?.invalid}">
+            Email address
+        </label>
+        <input type="email" name="email" id="email" formControlName="email" placeholder="Enter your email"
+            class="input input-flex-grow w-5/12 input-ghost-primary" 
+            [ngClass]="{'input-error': form.get('email')?.touched && form.get('email')?.invalid}"/>
+        <ng-container *ngIf="form.get('email')?.touched">
+            <span *ngIf="form.get('email')?.errors?.required" class="form-label-alt text-error">Email is required.</span>
+            <span *ngIf="form.get('email')?.errors?.email" class="form-label-alt text-error">Email is invalid.</span>
+        </ng-container>
+    </div>
+    <div class="form-field flex flex-row items-center">
+        <label class="w-3/12"
+            [ngClass]="{'text-error': form.get('displayName')?.touched && form.get('displayName')?.invalid}">
+            Username
+        </label>
+        <input type="text" name="displayName" id="displayName" formControlName="displayName" placeholder="Enter your username"
+            class="input input-flex-grow w-5/12 input-ghost-primary" 
+            [ngClass]="{'input-error': form.get('displayName')?.touched && form.get('displayName')?.invalid}"/>
+        <ng-container *ngIf="form.get('displayName')?.touched">
+            <span *ngIf="form.get('displayName')?.errors?.required" class="form-label-alt text-error">Username is required.</span>
+            <span *ngIf="form.get('displayName')?.errors?.minlength" class="form-label-alt text-error">Username must be at least 
+                {{form.get('displayName')?.errors?.minlength?.requiredLength}} characters long</span>
+        </ng-container>
+    </div>
+    <div class="form-field flex flex-row items-center">
+        <label class="w-3/12"
+            [ngClass]="{'text-error': form.get('password')?.touched && form.get('password')?.invalid}">
+            Current Password
+        </label>
+        <input type="password" name="password" id="password" formControlName="password"
+            placeholder="Enter current password" class="input input-flex-grow w-5/12 input-ghost-primary" 
+            [ngClass]="{'input-error': form.get('password')?.touched && form.get('password')?.invalid}"/>
+        <ng-container *ngIf="form.get('password')?.touched">
+            <span *ngIf="form.get('password')?.errors?.required" class="form-label-alt text-error">Password is required.</span>
+        </ng-container>
+    </div>
+    <div class="form-field pt-5">
+        <div class="form-control flex justify-center">
+            <button [disabled]="form.invalid" class="btn btn-primary w-2/12 mr-16 min-w-min">
+                Save
+            </button>
+        </div>
+    </div>
+</form>

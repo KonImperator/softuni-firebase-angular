@@ -6,15 +6,15 @@
         <ng-container *ngIf="genresData.data as data">
             <h2 class="title">Genres</h2>
             <section class="genre-container">
-                <a routerLink="/anime/genre/{{genre.mal_id}}/{{genre.name.replaceAll(' ', '_')}}" *ngFor="let genre of (data | slice:0:18) ">{{genre.name}}</a>
+                <a class="genre-btn" routerLink="/anime/genre/{{genre.mal_id}}/{{genre.name.replaceAll(' ', '_')}}" *ngFor="let genre of (data | slice:0:18) ">{{genre.name}}</a>
             </section>
             <h2 class="title">Explicit</h2>
             <section class="genre-container">
-                <a routerLink="/anime/genre/{{genre.mal_id}}/{{genre.name.replaceAll(' ', '_')}}" *ngFor="let genre of (data | slice:18:21) ">{{genre.name}}</a>
+                <a class="genre-btn" routerLink="/anime/genre/{{genre.mal_id}}/{{genre.name.replaceAll(' ', '_')}}" *ngFor="let genre of (data | slice:18:21) ">{{genre.name}}</a>
             </section>
             <h2 class="title">Themes</h2>
             <section class="genre-container">
-                <a routerLink="/anime/genre/{{genre.mal_id}}/{{genre.name.replaceAll(' ', '_')}}" *ngFor="let genre of (data | slice:21) ">{{genre.name}}</a>
+                <a class="genre-btn" routerLink="/anime/genre/{{genre.mal_id}}/{{genre.name.replaceAll(' ', '_')}}" *ngFor="let genre of (data | slice:21) ">{{genre.name}}</a>
             </section>
         </ng-container>
     </ng-container>

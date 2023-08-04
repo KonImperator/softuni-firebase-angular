@@ -1,3 +1,5 @@
+import { initializeApp } from "@angular/fire/app";
+
 export const environment = {
   production: false,
   dataApiUrl: 'https://api.jikan.moe/v4/',

@@ -1,6 +1,35 @@
 .footer {
-  text-align: center;
+  height: 2.9rem;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 0.5fr;
+  align-items: center;
+  justify-items: center;
   width: 100%;
   position: relative;
   bottom: 0;
+  padding: 0 20px;
+}
+
+.footer p {
+  grid-column: 2;  /* Place the text in the middle column */
+  margin: 0;
+}
+
+.socials {
+  grid-column: 3;  /* Place the social icons in the right column */
+  display: flex;
+  justify-content: flex-end; /* Align icons to the right of the grid cell */
+}
+
+.socials img {
+  margin-right: 20px;
+  height: 32px;
+}
+@media (prefers-color-scheme: light) {
+
+  .socials {
+    border-radius: 50px;
+    background-color: rgba(187, 49, 49, 0.5);
+    padding: 5px;
+  }
 }

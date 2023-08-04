@@ -1,10 +1,4 @@
-
-/* footer doesn't fit in as well as I'd like 
-   component shows 2 scrollbars (for banner and website when zoom changes)
-*/
-
 /* To consider for mobile:
-- increase height of banner to cover more area and reduce bottom blank space
 - gather up the links along with the social icons in a div and make it a burger
 - change the logo from text to a more compact picture
 - consider scaling down/making banner fit better
@@ -14,58 +8,65 @@
   font-family: 'VT323', monospace;
   text-align: center;
   background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/475683105464265.6216596233314.png');
-  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
-  height: 85vh;
+  height: 85.1vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-  
+@media (prefers-color-scheme: light) {
+  .hero {
+    background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/b74520110826927.624205a01838f.png');
+  }
+
   .over {
-    width: 40%;
-    padding: 30px;
-    background-color: rgba(0, 0, 0, 0.4);
+    color: rgb(255, 255, 255)
   }
-  
-  h2 {
-    font-size: 48px;
-    margin-bottom: 20px;
-    color: #fff;
-  }
-  
-  p {
-    font-size: 24px;
-    margin-bottom: 40px;
-    color: #fff;
-  }
+}
 
-  a {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #ff4500;
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    letter-spacing: 1px;
-    transition: background-color 0.3s ease;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Add text shadow for a dramatic effect */
-  }
-  
-  a:hover {
-    background-color: #ff5722;
-    transform: scale(1.05); /* Slightly scale up the button on hover */
-    box-shadow: 0px 0px 10px rgba(255, 69, 0, 0.6); /* Add a glowing effect on hover */
-  }
+.over {
+  width: 40%;
+  padding: 30px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
 
-  .button {
-    padding: 8px 15px;
-    margin-top: 20px;
-    font-size: 27px;
-    color: #fff;
-    border-radius: 5px;
-  }
+h2 {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 24px;
+  margin-bottom: 40px;
+}
+
+a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #ff4500;
+  text-decoration: none;
+  font-weight: bold;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  /* Add text shadow for a dramatic effect */
+}
+
+a:hover {
+  background-color: #ff5722;
+  transform: scale(1.05);
+  /* Slightly scale up the button on hover */
+  box-shadow: 0px 0px 10px rgba(255, 69, 0, 0.6);
+  /* Add a glowing effect on hover */
+}
+
+.button {
+  padding: 8px 15px;
+  margin-top: 20px;
+  font-size: 27px;
+  border-radius: 5px;
+}

@@ -2,21 +2,16 @@
     display: flex;
     font-size: 13px;
     border: 1px solid #ff5722;
-    max-width: 600px;
     margin: 20px;
     padding: 20px;
 }
 
 .anime-card-image {
-    width: 200px;
-    height: 300px;
-    object-fit: cover;
     margin-right: 20px;
 }
 
 .anime-card-details {
-    display: flex;
-    flex-direction: column;
+ 
 }
 
 .anime-card-title {
@@ -29,6 +24,5 @@
 }
 
 .anime-card-synopsis {
-    margin: 10px 0;
     font-style: italic;
 }

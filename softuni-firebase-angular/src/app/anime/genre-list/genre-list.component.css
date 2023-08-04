@@ -1,11 +1,9 @@
 .genre-wrapper {
-    background: #1e1e2f;
     min-height: 100vh;
 }
 
 .genre-container {
     padding-top: 20px;
-    padding-bottom: 20px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -16,9 +14,8 @@
   font-size: 32px;
 }
 
-a {
+a.genre-btn {
     margin-right: 20px;
-    color: rgb(255, 255, 255);
     margin-bottom: 15px;
     min-width: 200px;
     padding: 10px 20px;
@@ -31,7 +28,7 @@ a {
     text-align: center;
   }
   
-  a:hover {
+  a.genre-btn:hover {
     background-color: #ff5722;
     transform: scale(1.05);
     box-shadow: 0px 0px 10px rgba(255, 69, 0, 0.6);

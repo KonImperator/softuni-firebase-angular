@@ -15,6 +15,7 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { AnimeModule } from './anime/anime.module';
 import { SharedModule } from './shared/shared.module';
 
+
 @NgModule({
   declarations: [AppComponent],
   imports: [

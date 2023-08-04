@@ -12,6 +12,7 @@ export class HeaderComponent {
   constructor(private userService: UserService) {}
 
   user$: Observable<User | null> = this.userService.user$;
+  isLoading$ = this.userService.isLoading$;
 
   onLogout() {
     this.userService.logout();

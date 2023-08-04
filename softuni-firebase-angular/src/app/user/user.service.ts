@@ -1,5 +1,4 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { inject } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -7,7 +6,6 @@ import {
   signOut,
   User,
   user,
-  onAuthStateChanged,
   updateProfile,
 } from '@angular/fire/auth';
 import {
@@ -18,24 +16,46 @@ import {
   Firestore,
   setDoc,
 } from '@angular/fire/firestore';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription, tap } from 'rxjs';
 
+interface LoggedInUser {
+  displayName: string | null | undefined;
+  email: string | null | undefined;
+  uid: string | null | undefined;
+  createdAt: string | null | undefined;
+}
 @Injectable({
   providedIn: 'root',
 })
 export class UserService implements OnDestroy, OnInit {
-
+  user: LoggedInUser | null;
   user$: Observable<User | null> = user(this.auth);
+
+  private _isLoading: BehaviorSubject<boolean> = new BehaviorSubject(true); // using this to avoid some of the flicker between logged in/anon user in the header
+  isLoading$: Observable<boolean> = this._isLoading.asObservable();
+
   userDocRef: DocumentReference | null;
+
   userSubscription: Subscription;
   
   constructor(private auth: Auth, private firestore: Firestore) {
-    this.userSubscription = this.user$.subscribe();
+    this.userSubscription = this.user$.pipe(tap((user) => {
+      if (user) {
+        const currentUser = {
+          displayName: user.displayName,
+          email: user.email,
+          uid: user.uid,
+          createdAt: user.metadata.creationTime
+        }
+        this.user = currentUser;
+      }
+    }
+    )).subscribe(() => this._isLoading.next(false));
   }
 
   ngOnInit(): void {}
 
-  addUserProfile(userData: any) {
+  saveUserProfile(userData: any) {
     setDoc(this.userDocRef!, userData)
   }
 
@@ -81,7 +101,7 @@ export class UserService implements OnDestroy, OnInit {
           // if registration is successful, update profile data and add subcollection
           updateProfile(userCredential.user, { displayName: userData.username })
            
-          this.addUserProfile(data);
+          this.saveUserProfile(data);
           return userCredential.user;
 
         } catch (error) {
@@ -99,6 +119,7 @@ export class UserService implements OnDestroy, OnInit {
   }
 
   logout(): Promise<void> {
+    this.user = null;
     return signOut(this.auth);
   }
 

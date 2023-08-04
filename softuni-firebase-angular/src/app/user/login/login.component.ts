@@ -10,7 +10,11 @@ import { UserService } from '../user.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
-  constructor(private userService: UserService, private fb: FormBuilder, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private fb: FormBuilder,
+    private router: Router
+  ) {}
   form: FormGroup = this.fb.group({
     email: ['', [Validators.required]],
     password: ['', [Validators.required]],
@@ -28,7 +32,10 @@ export class LoginComponent {
 
     this.userService
       .login(this.form.value.email, this.form.value.password)
-      .then(() => this.router.navigate(['/']))
+      .then((user) => {
+        console.log(user)
+        this.router.navigate(['/']);
+      })
       .catch((err) => {
         this.error = err.message;
         setTimeout(() => {

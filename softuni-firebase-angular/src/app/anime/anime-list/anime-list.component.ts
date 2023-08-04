@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, Subject, takeUntil } from 'rxjs';
 import { AnimeList } from 'src/app/api/interfaces/anime';
-import { JikanDataService } from 'src/app/api/jikan-data-service.service';
+import { JikanDataService } from 'src/app/api/jikan-data.service';
 
 @Component({
   selector: 'app-anime-list',

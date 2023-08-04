@@ -1,13 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-:host {
+.navbar {
   font-family: 'VT323', monospace;
   line-height: 1;
-  width: 50%
+  max-height: 4rem;
+}
+
+.menu-item a:hover {
+  background-color: inherit;
+}
+
+.menu-logout {
+  background-color: rgb(74, 33, 33);
+}
+
+.dropdown-item {
+  font-size: medium;
 }
 
 h1 {
-  font-size: 50px;
+  font-size: 46px;
   color: #ff4500;
 }
 
@@ -20,7 +32,6 @@ a {
   font-size: 27px;
   display: inline-block;
   padding: 10px 20px;
-  color: #fff;
   text-decoration: none;
   font-weight: bold;
   letter-spacing: 1px;
@@ -30,16 +41,16 @@ a {
 .navbar-center a:hover {
   background-color: #ff5722;
   transform: scale(1.05);
-  box-shadow: 0px 0px 10px rgba(255, 69, 0, 0.6);
 }
 
-a.active {
-  background-color: #ff5722;
-  box-shadow: 0px 0px 10px rgba(255, 69, 0, 0.6);
+@media (prefers-color-scheme: dark) {
+  .navbar-center a:hover {
+      color: rgb(255, 255, 255);
+  }
 }
 
-.socials img {
-  margin-right: 20px;
-  height: 32px;
-  min-width: 32px;
+@media (prefers-color-scheme: light) {
+  .menu-logout {
+    background-color: rgb(186, 9, 9);
+  }
 }
