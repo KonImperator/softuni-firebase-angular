@@ -19,7 +19,9 @@
                 <div class="dropdown-container">
                     <div class="dropdown dropdown-hover">
                         <label class="btn btn-ghost flex cursor-pointer px-0" tabindex="0">
-                            <img class="avatar-image" [src]="user.photoURL ? user.photoURL : '/assets/anime-default-pfp-2.jpg'"  alt="avatar" />
+                            <div class="avatar avatar-md w-12 h-12">
+                                <img [src]="user.photoURL ? user.photoURL : '/assets/avatars/avatar-5-onepiece.jpg'" alt="avatar" />
+                            </div>
                         </label>
                         <div class="dropdown-menu dropdown-menu-bottom-left">
                             <section >

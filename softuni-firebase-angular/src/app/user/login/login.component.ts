@@ -32,8 +32,7 @@ export class LoginComponent {
 
     this.userService
       .login(this.form.value.email, this.form.value.password)
-      .then((user) => {
-        console.log(user)
+      .then(() => {
         this.router.navigate(['/']);
       })
       .catch((err) => {

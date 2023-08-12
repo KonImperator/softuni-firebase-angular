@@ -7,3 +7,7 @@
 .input-flex-grow {
     max-width: none;
   }
+
+  .selected {
+    border: 2px solid rgb(255, 2, 2);
+  }

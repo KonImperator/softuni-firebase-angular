@@ -1,3 +1,33 @@
+    <ng-container *ngIf="user">
+    <div class="flex flex-col items-start">
+    <div *ngIf="error" class="alert alert-error max-w-xl ml-16">
+        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4C12.96 4 4 12.96 4 24C4 35.04 12.96 44 24 44C35.04 44 44 35.04 44 24C44 12.96 35.04 4 24 4ZM24 26C22.9 26 22 25.1 22 24V16C22 14.9 22.9 14 24 14C25.1 14 26 14.9 26 16V24C26 25.1 25.1 26 24 26ZM26 34H22V30H26V34Z" fill="#E92C2C" />
+        </svg>
+        <div class="flex w-full justify-between">
+            <div class="flex flex-col">
+                <span>Error</span>
+                <span class="text-content2">{{error}}</span>
+            </div>
+            <svg class="cursor-pointer" (click)="hideMessage()" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.3007 5.71C17.9107 5.32 17.2807 5.32 16.8907 5.71L12.0007 10.59L7.1107 5.7C6.7207 5.31 6.0907 5.31 5.7007 5.7C5.3107 6.09 5.3107 6.72 5.7007 7.11L10.5907 12L5.7007 16.89C5.3107 17.28 5.3107 17.91 5.7007 18.3C6.0907 18.69 6.7207 18.69 7.1107 18.3L12.0007 13.41L16.8907 18.3C17.2807 18.69 17.9107 18.69 18.3007 18.3C18.6907 17.91 18.6907 17.28 18.3007 16.89L13.4107 12L18.3007 7.11C18.6807 6.73 18.6807 6.09 18.3007 5.71Z" fill="#969696" />
+            </svg>
+        </div>
+    </div>
+    <div *ngIf="success" class="alert alert-success max-w-xl ml-16">
+        <svg (click)="hideMessage()" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 4C12.96 4 4 12.96 4 24C4 35.04 12.96 44 24 44C35.04 44 44 35.04 44 24C44 12.96 35.04 4 24 4ZM18.58 32.58L11.4 25.4C10.62 24.62 10.62 23.36 11.4 22.58C12.18 21.8 13.44 21.8 14.22 22.58L20 28.34L33.76 14.58C34.54 13.8 35.8 13.8 36.58 14.58C37.36 15.36 37.36 16.62 36.58 17.4L21.4 32.58C20.64 33.36 19.36 33.36 18.58 32.58Z" fill="#00BA34" />
+        </svg>
+        <div class="flex w-full justify-between">
+        <div class="flex flex-col">
+            <span>Success</span>
+            <span class="text-content2">{{success}}</span>
+        </div>
+        <svg class="cursor-pointer" (click)="hideMessage()"  width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.3007 5.71C17.9107 5.32 17.2807 5.32 16.8907 5.71L12.0007 10.59L7.1107 5.7C6.7207 5.31 6.0907 5.31 5.7007 5.7C5.3107 6.09 5.3107 6.72 5.7007 7.11L10.5907 12L5.7007 16.89C5.3107 17.28 5.3107 17.91 5.7007 18.3C6.0907 18.69 6.7207 18.69 7.1107 18.3L12.0007 13.41L16.8907 18.3C17.2807 18.69 17.9107 18.69 18.3007 18.3C18.6907 17.91 18.6907 17.28 18.3007 16.89L13.4107 12L18.3007 7.11C18.6807 6.73 18.6807 6.09 18.3007 5.71Z" fill="#969696" />
+        </svg>
+        </div>
+    </div>
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-group w-9/12 ml-16 mt-7">
     <div class="text-center mr-20 text-3xl">
         <h2 class="">Profile</h2>
@@ -6,19 +36,19 @@
         <label for="joinDate" class="w-3/12">
             Join Date
         </label>
-        <input disabled id="joinDate" class="input input-flex-grow w-5/12">
+        <input disabled id="joinDate" class="input input-flex-grow w-5/12" [value]="user!.metadata.creationTime">
     </div>
     <div class="form-field flex flex-row items-center">
         <label class="w-3/12"
             [ngClass]="{'text-error': form.get('email')?.touched && form.get('email')?.invalid}">
-            Email address
+            Email Address
         </label>
-        <input type="email" name="email" id="email" formControlName="email" placeholder="Enter your email"
+        <input type="email" name="email" id="email" formControlName="email" [value]="user!.email" placeholder="Enter your email"
             class="input input-flex-grow w-5/12 input-ghost-primary" 
             [ngClass]="{'input-error': form.get('email')?.touched && form.get('email')?.invalid}"/>
         <ng-container *ngIf="form.get('email')?.touched">
-            <span *ngIf="form.get('email')?.errors?.required" class="form-label-alt text-error">Email is required.</span>
-            <span *ngIf="form.get('email')?.errors?.email" class="form-label-alt text-error">Email is invalid.</span>
+            <span *ngIf="form.get('email')?.errors?.required" class="form-label-alt text-error">Email is required</span>
+            <span *ngIf="form.get('email')?.errors?.email" class="form-label-alt text-error">Email is invalid</span>
         </ng-container>
     </div>
     <div class="form-field flex flex-row items-center">
@@ -26,7 +56,7 @@
             [ngClass]="{'text-error': form.get('displayName')?.touched && form.get('displayName')?.invalid}">
             Username
         </label>
-        <input type="text" name="displayName" id="displayName" formControlName="displayName" placeholder="Enter your username"
+        <input type="text" name="displayName" id="displayName" formControlName="displayName" [value]="user!.displayName" placeholder="Enter your display name"
             class="input input-flex-grow w-5/12 input-ghost-primary" 
             [ngClass]="{'input-error': form.get('displayName')?.touched && form.get('displayName')?.invalid}"/>
         <ng-container *ngIf="form.get('displayName')?.touched">
@@ -44,14 +74,45 @@
             placeholder="Enter current password" class="input input-flex-grow w-5/12 input-ghost-primary" 
             [ngClass]="{'input-error': form.get('password')?.touched && form.get('password')?.invalid}"/>
         <ng-container *ngIf="form.get('password')?.touched">
-            <span *ngIf="form.get('password')?.errors?.required" class="form-label-alt text-error">Password is required.</span>
+            <span *ngIf="form.get('password')?.errors?.required" class="form-label-alt text-error">Password is required</span>
         </ng-container>
+    </div>
+    <div class="form-field flex flex-row items-center">
+    <label class="w-3/12">
+        Choose Avatar
+    </label>
+    <input type="file" accept="image/*" (change)="onUpload($event)" class="input-file input-file-primary input-flex-grow w-5/12" />
+    <label class="btn btn-primary" for="modal-2">Default Avatars &nbsp;<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4.19791 18.5829L4.71128 15.0641C4.74222 14.8338 4.84734 14.6197 5.01075 14.4545L14.9574 4.49708C15.0863 4.36689 15.2464 4.27197 15.4224 4.22141C15.5985 4.17084 15.7845 4.16633 15.9628 4.20831C16.8761 4.46113 17.7039 4.95635 18.3586 5.64149C19.0414 6.30039 19.533 7.132 19.7811 8.04795C19.823 8.22623 19.8185 8.4123 19.768 8.58834C19.7174 8.76438 19.6225 8.92448 19.4923 9.05331L9.53489 19C9.36962 19.1634 9.15561 19.2685 8.92526 19.2995L5.40648 19.8128C5.24031 19.8368 5.07082 19.8214 4.91172 19.7677C4.75263 19.714 4.60841 19.6237 4.49074 19.5039C4.37306 19.3841 4.28523 19.2384 4.23436 19.0784C4.18349 18.9183 4.171 18.7486 4.19791 18.5829Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M13.0751 6.39015L17.6099 10.925" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        </label>
+    <input class="modal-state" id="modal-2" type="checkbox" />
+    <div class="modal w-screen">
+        <label class="modal-overlay" for="modal-2"></label>
+        <div (click)="setDefaultAvatar($event)" class="modal-content flex flex-col gap-5 max-w-3xl">
+            <label for="modal-2" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
+            <h2 class="text-xl">Default Avatars</h2>
+            <div class="flex flex-wrap">
+                <ng-container *ngFor="let avatarUrl of defaultAvatarList">
+                    <div [ngClass]="{selected: defaultAvatar == avatarUrl}" class="w-14 h-14 avatar mr-6 mb-6 cursor-pointer">
+                        <img [src]="avatarUrl"  alt="avatar" />
+                    </div>
+                </ng-container>
+        </div>
+            <div class="flex gap-3">
+                <button (click)="finalizeDefaultAvatar()" type="button" class="btn btn-block btn-primary">Choose</button>
+            </div>
+        </div>
+    </div>
     </div>
     <div class="form-field pt-5">
         <div class="form-control flex justify-center">
-            <button [disabled]="form.invalid" class="btn btn-primary w-2/12 mr-16 min-w-min">
+            <button [disabled]="form.invalid || isLoading || error" [ngClass]="{'btn-loading': isLoading}" class="btn btn-primary w-2/12 mr-16 min-w-min">
                 Save
             </button>
         </div>
     </div>
 </form>
+</div>
+</ng-container>

@@ -45,7 +45,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
     const currPage = pagination.current_page;
     const lastPage = pagination.last_visible_page;
     const pages = [];
-    for (let i = currPage - 6; i <= currPage + 6; i++) {
+    for (let i = currPage - 3; i <= currPage + 3; i++) {
       if (i >= 1 && i <= lastPage) {
         pages.push({ isCurrentPage: currPage === i, page: i });
       }

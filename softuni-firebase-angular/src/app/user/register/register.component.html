@@ -19,45 +19,43 @@
         </div>
         <div class="form-field">
             <label class="form-label"
-                [ngClass]="{'text-error': form.get('username')?.touched && form.get('username')?.errors }">
+                [ngClass]="{'text-error': form.get('displayName')?.touched && form.get('displayName')?.errors }">
                 Username
             </label>
-            <input type="text" name="username" id="username" formControlName="username" placeholder="Enter your username" class="input max-w-full input-ghost-primary"
-                [ngClass]="{'input-error': form.get('username')?.touched && form.get('username')?.errors}"/>
-            <ng-container *ngIf="form.get('username')?.touched">
-                <span *ngIf="form.get('username')?.errors?.['required']" class="form-label-alt text-error">Username is required.</span>
-                <span *ngIf="form.get('username')?.errors?.['minlength']" class="form-label-alt text-error">Username must be at least 
-                    {{form.get('username')?.errors?.['minlength'].requiredLength}} characters long</span>
+            <input type="text" name="displayName" id="displayName" formControlName="displayName" placeholder="Enter your display name" class="input max-w-full input-ghost-primary"
+                [ngClass]="{'input-error': form.get('displayName')?.touched && form.get('displayName')?.errors}"/>
+            <ng-container *ngIf="form.get('displayName')?.touched">
+                <span *ngIf="form.get('displayName')?.errors?.['required']" class="form-label-alt text-error">Username is required.</span>
+                <span *ngIf="form.get('displayName')?.errors?.['minlength']" class="form-label-alt text-error">Username must be at least 
+                    {{form.get('displayName')?.errors?.['minlength'].requiredLength}} characters long</span>
             </ng-container>
         </div>
-        <ng-container formGroupName="passwords">
             <div class="form-field">
                 <label class="form-label"
-                    [ngClass]="{'text-error': form.get('passwords')?.get('password')?.touched && form.get('passwords')?.get('password')?.errors}">
+                [ngClass]="{'text-error': form.get('password')?.touched && form.get('password')?.invalid}">
                     Password
                 </label>
                 <input type="password" name="password" id="password" formControlName="password"
                     placeholder="Enter your password" class="input max-w-full input-ghost-primary"
-                    [ngClass]="{'input-error': form.get('passwords')?.get('password')?.touched && form.get('passwords')?.get('password')?.errors}"/>
-                <ng-container *ngIf="form.get('passwords')?.get('password')?.touched">
-                    <span *ngIf="form.get('passwords')?.get('password')?.errors?.['required']" class="form-label-alt text-error">Password is required.</span>
-                    <span *ngIf="form.get('passwords')?.get('password')?.errors?.['pattern']" class="form-label-alt text-error">Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</span>
-                </ng-container>
+                    [ngClass]="{'input-error': form.get('password')?.touched && form.get('password')?.invalid}" />
+                    <ng-container *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
+                        <span class="form-label-alt text-error">Password is required</span>
+                        <span *ngIf="form.get('password')?.errors?.['pattern']" class="form-label-alt text-error">Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters</span>
+                    </ng-container>
             </div>
             <div class="form-field">
                 <label class="form-label"
-                    [ngClass]="{'text-error': form.get('passwords')?.get('rePass')?.touched && (form.get('passwords')?.get('rePass')?.errors || form.get('passwords')?.errors)}">
+                [ngClass]="{'text-error': form.get('rePass')?.touched && (form.get('rePass')?.invalid || form.errors?.passwordsDifferent)}">
                     Repeat Password
                 </label>
                 <input type="password" name="rePass" id="rePass" formControlName="rePass"
                     placeholder="Repeat your password" class="input max-w-full input-ghost-primary"
-                    [ngClass]="{'input-error': form.get('passwords')?.get('rePass')?.touched && (form.get('passwords')?.get('rePass')?.errors || form.get('passwords')?.errors)}"/>
-                <ng-container *ngIf="form.get('passwords')?.get('rePass')?.touched">
-                    <span *ngIf="form.get('passwords')?.get('rePass')?.errors?.['required']" class="form-label-alt text-error">Repeat password is required.</span>
-                    <span *ngIf="form.get('passwords')?.errors?.['passwordInvalid']" class="form-label-alt text-error">Passwords must match.</span>
-                </ng-container>
+                    [ngClass]="{'input-error': form.get('rePass')?.touched && (form.errors?.passwordsDifferent || form.get('rePass')?.invalid)}"/>
+                    <ng-container *ngIf="form.get('rePass')?.touched">
+                        <span *ngIf="form.get('rePass')?.errors?.required" class="form-label-alt text-error">Repeat Password is required.</span>
+                        <span *ngIf="form.errors?.passwordsDifferent" class="form-label-alt text-error">Passwords don't match.</span>
+                    </ng-container>
             </div>
-        </ng-container>
         <span *ngIf="error" class="form-label-alt text-error">{{error}}</span>
         <div class="form-field pt-5">
             <div class="form-control justify-between">
