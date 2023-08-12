@@ -5,13 +5,18 @@
     </div>
       <div class="anime-card-details">
         <h2 class="anime-card-title">Anime Title: {{anime.title}}</h2>
-        <p class="anime-card-detail"><strong>Episodes: </strong>{{anime.episodes}}</p>
-        <p class="anime-card-detail"><strong>Date Aired: </strong>{{anime.aired?.string}}</p>
-        <p class="anime-card-synopsis"><strong>Summary:</strong> {{anime.synopsis | slice:0:80}}...</p>
-        <p class="anime-card-detail"><strong>Score:</strong> {{anime.score}}</p>
-        <p class="anime-card-detail"><strong>Viewers:</strong> {{anime.members}}</p>
-        <p class="anime-card-detail"><strong>Studio:</strong> {{anime.studios?.[0]?.name}}</p>
-        <p class="anime-card-detail"><strong>Source:</strong> {{anime.source}} </p>
-        <p class="anime-card-detail"><strong>Genre:</strong> {{anime.genres}}</p>
+        <p class="anime-card-detail"><strong>Episodes: </strong>{{anime.episodes ? anime.episodes : 'N/A'}}</p>
+        <p class="anime-card-detail"><strong>Date Aired: </strong>{{anime.aired?.string ? anime.aired?.string : 'N/A'}}</p>
+        <p class="anime-card-synopsis"><strong>Summary:</strong> {{anime.synopsis ? (anime.synopsis | slice:0:80) : 'N/A'}}...</p>
+        <p class="anime-card-detail"><strong>Score:</strong> {{anime.score ? anime.score : 'N/A'}}</p>
+        <p class="anime-card-detail"><strong>Viewers:</strong> {{anime.members ? anime.members : 'N/A'}}</p>
+        <p class="anime-card-detail"><strong>Studio:</strong> {{anime.studios?.[0]?.name ? anime.studios?.[0]?.name : 'N/A'}}</p>
+        <p class="anime-card-detail"><strong>Source:</strong> {{anime.source ? anime.source : 'N/A'}} </p>
+        <p class="anime-card-detail"><strong>Genre:</strong> {{anime.genres ? anime.genres : 'N/A'}}</p>
     </div>
 </div>
+
+
+
+      
+      

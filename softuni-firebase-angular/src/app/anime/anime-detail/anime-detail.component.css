@@ -3,10 +3,13 @@
     font-size: 13px;
     margin: 20px;
     padding: 20px;
+    height: 79vh;
 }
 
 .anime-card-image {
     margin-right: 20px;
+    min-width: 25%;
+    max-width: 25%
 }
 
 .anime-card-title {

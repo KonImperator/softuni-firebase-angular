@@ -1,19 +1,19 @@
-<ng-container *ngIf="(anime | async) as anime">
+<ng-container *ngIf="anime">
   <div class="anime-card">
     <img class="anime-card-image" [src]="anime.images?.webp?.large_image_url" alt="Anime title">
     <div class="anime-card-details">
       <h2 class="anime-card-title">Anime Title: {{anime.title}}</h2>
-      <p class="anime-card-detail"><strong>Episodes: </strong>{{anime.episodes}}</p>
-      <p class="anime-card-detail"><strong>Date Aired: </strong>{{anime.aired?.string}}</p>
-      <p class="anime-card-synopsis"><strong>Summary:</strong> {{anime.synopsis}}</p>
-      <p class="anime-card-detail"><strong>Score:</strong> {{anime.score}}</p>
-      <p class="anime-card-detail"><strong>Viewers:</strong> {{anime.members}}</p>
-      <p class="anime-card-detail"><strong>Studio:</strong> {{anime.studios?.[0]?.name}}</p>
-      <p class="anime-card-detail"><strong>Source:</strong> {{anime.source}} </p>
-      <p class="anime-card-detail"><strong>Genre:</strong> {{anime.genres}}</p>
-      <div class="buttons">
-        <button class="btn btn-primary">Like</button>
-        <button class="btn btn-primary">Add to Watchlist</button>
+      <p class="anime-card-detail"><strong>Episodes: </strong>{{anime.episodes ? anime.episodes : 'N/A'}}</p>
+      <p class="anime-card-detail"><strong>Date Aired: </strong>{{anime.aired?.string ? anime.aired?.string : 'N/A'}}</p>
+      <p class="anime-card-synopsis"><strong>Summary:</strong> {{anime.synopsis ? anime.synopsis : 'N/A'}}</p>
+      <p class="anime-card-detail"><strong>Score:</strong> {{anime.score ? anime.score : 'N/A'}}</p>
+      <p class="anime-card-detail"><strong>Viewers:</strong> {{anime.members ? anime.members : 'N/A'}}</p>
+      <p class="anime-card-detail"><strong>Studio:</strong> {{anime.studios?.[0]?.name ? anime.studios?.[0]?.name : 'N/A'}}</p>
+      <p class="anime-card-detail"><strong>Source:</strong> {{anime.source ? anime.source : 'N/A'}} </p>
+      <p class="anime-card-detail"><strong>Genre:</strong> {{anime.genres ? anime.genres : 'N/A'}}</p>
+      <div *ngIf="user | async" class="buttons">
+        <button (click)="toggleAdd('likedList')" class="btn btn-primary">{{!!inLikedList ? 'Unlike' : 'Like' }}</button>
+        <button (click)="toggleAdd('watchlist')" class="btn btn-primary">{{!!inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist' }}</button>
       </div>
     </div>
   </div>

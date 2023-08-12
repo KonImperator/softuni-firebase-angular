@@ -1,3 +1,16 @@
+export interface StoredAnime {
+  mal_id: number
+  title: string | 'N/A';
+  episodes: number | 'N/A';
+  aired: string | 'N/A';
+  synopsis: string | 'N/A';
+  score: number | 'N/A';
+  members: number | 'N/A';
+  studios: string | 'N/A';
+  source: string | 'N/A';
+  genres: string | 'N/A';
+}
+
 export interface AnimeList {
   pagination: Pagination;
   data: AnimeData[];

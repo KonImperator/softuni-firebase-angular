@@ -15,11 +15,12 @@
 }
 
 a.genre-btn {
+  border-radius: 20px;
     margin-right: 20px;
     margin-bottom: 15px;
     min-width: 200px;
     padding: 10px 20px;
-    background-color: #ff4500;
+    background-color: #f86d02d2;
     text-decoration: none;
     font-weight: bold;
     letter-spacing: 1px;
