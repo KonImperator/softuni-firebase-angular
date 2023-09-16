@@ -1,7 +1,7 @@
 <div *ngIf="anime" class="anime-card">
     <div class="image-wrapper">
         <img class="anime-card-image" [src]="anime.images?.webp?.large_image_url" alt="Anime title">
-        <a routerLink="/anime/{{anime.mal_id}}/{{anime.titles[0].title.replaceAll(' ', '_')}}" class="btn btn-primary btn-details">Details</a>
+        <a routerLink="/anime/{{anime.mal_id}}/{{ anime.title | encodeUri }}" class="btn btn-primary btn-details">Details</a>
     </div>
       <div class="anime-card-details">
         <h2 class="anime-card-title">Anime Title: {{anime.title}}</h2>
@@ -15,8 +15,3 @@
         <p class="anime-card-detail"><strong>Genre:</strong> {{anime.genres ? anime.genres : 'N/A'}}</p>
     </div>
 </div>
-
-
-
-      
-      

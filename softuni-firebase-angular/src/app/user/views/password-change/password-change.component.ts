@@ -48,17 +48,9 @@ export class PasswordChangeComponent {
       this.form.value.password,
     ];
 
-    this.userService
-      .changePassword(currPass, newPass)
-      .pipe(take(1))
-      .subscribe({
-        complete: () => {
-          this.handleCompleteMessage();
-        },
-        error: (err) => {
-          this.handleCompleteMessage(err);
-        },
-      });
+    this.userService.changePassword(currPass, newPass)
+    .then(() => this.handleCompleteMessage())
+    .catch((err) => this.handleCompleteMessage(err.message));
   }
 
   handleCompleteMessage(err?: string) {

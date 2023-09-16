@@ -77,42 +77,53 @@
             <span *ngIf="form.get('password')?.errors?.required" class="form-label-alt text-error">Password is required</span>
         </ng-container>
     </div>
-    <div class="form-field flex flex-row items-center">
-    <label class="w-3/12">
-        Choose Avatar
-    </label>
-    <input type="file" accept="image/*" (change)="onUpload($event)" class="input-file input-file-primary input-flex-grow w-5/12" />
-    <label class="btn btn-primary" for="modal-2">Default Avatars &nbsp;<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M4.19791 18.5829L4.71128 15.0641C4.74222 14.8338 4.84734 14.6197 5.01075 14.4545L14.9574 4.49708C15.0863 4.36689 15.2464 4.27197 15.4224 4.22141C15.5985 4.17084 15.7845 4.16633 15.9628 4.20831C16.8761 4.46113 17.7039 4.95635 18.3586 5.64149C19.0414 6.30039 19.533 7.132 19.7811 8.04795C19.823 8.22623 19.8185 8.4123 19.768 8.58834C19.7174 8.76438 19.6225 8.92448 19.4923 9.05331L9.53489 19C9.36962 19.1634 9.15561 19.2685 8.92526 19.2995L5.40648 19.8128C5.24031 19.8368 5.07082 19.8214 4.91172 19.7677C4.75263 19.714 4.60841 19.6237 4.49074 19.5039C4.37306 19.3841 4.28523 19.2384 4.23436 19.0784C4.18349 18.9183 4.171 18.7486 4.19791 18.5829Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M13.0751 6.39015L17.6099 10.925" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        </label>
-    <input class="modal-state" id="modal-2" type="checkbox" />
-    <div class="modal w-screen">
-        <label class="modal-overlay" for="modal-2"></label>
-        <div (click)="setDefaultAvatar($event)" class="modal-content flex flex-col gap-5 max-w-3xl">
-            <label for="modal-2" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
-            <h2 class="text-xl">Default Avatars</h2>
-            <div class="flex flex-wrap">
-                <ng-container *ngFor="let avatarUrl of defaultAvatarList">
-                    <div [ngClass]="{selected: defaultAvatar == avatarUrl}" class="w-14 h-14 avatar mr-6 mb-6 cursor-pointer">
-                        <img [src]="avatarUrl"  alt="avatar" />
-                    </div>
-                </ng-container>
-        </div>
-            <div class="flex gap-3">
-                <button (click)="finalizeDefaultAvatar()" type="button" class="btn btn-block btn-primary">Choose</button>
-            </div>
-        </div>
-    </div>
-    </div>
+    
     <div class="form-field pt-5">
         <div class="form-control flex justify-center">
-            <button [disabled]="form.invalid || isLoading || error" [ngClass]="{'btn-loading': isLoading}" class="btn btn-primary w-2/12 mr-16 min-w-min">
+            <button [disabled]="form.invalid || form.pristine || isLoading.saveBtn || error" [ngClass]="{'btn-loading': isLoading.saveBtn}" class="btn btn-primary w-2/12 mr-16 min-w-min">
                 Save
             </button>
         </div>
     </div>
 </form>
+<!--  -->
+<div class="form-group w-9/12 ml-16 mt-7">
+    <div class="form-field flex flex-row items-center">
+        <label class="w-3/12">
+            Choose Avatar
+        </label>
+        <input type="file" accept="image/*" (change)="onUpload($event)" class="input-file input-file-primary input-flex-grow w-5/12" />
+        <label class="btn btn-primary" for="modal-2">Default Avatars &nbsp;<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4.19791 18.5829L4.71128 15.0641C4.74222 14.8338 4.84734 14.6197 5.01075 14.4545L14.9574 4.49708C15.0863 4.36689 15.2464 4.27197 15.4224 4.22141C15.5985 4.17084 15.7845 4.16633 15.9628 4.20831C16.8761 4.46113 17.7039 4.95635 18.3586 5.64149C19.0414 6.30039 19.533 7.132 19.7811 8.04795C19.823 8.22623 19.8185 8.4123 19.768 8.58834C19.7174 8.76438 19.6225 8.92448 19.4923 9.05331L9.53489 19C9.36962 19.1634 9.15561 19.2685 8.92526 19.2995L5.40648 19.8128C5.24031 19.8368 5.07082 19.8214 4.91172 19.7677C4.75263 19.714 4.60841 19.6237 4.49074 19.5039C4.37306 19.3841 4.28523 19.2384 4.23436 19.0784C4.18349 18.9183 4.171 18.7486 4.19791 18.5829Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M13.0751 6.39015L17.6099 10.925" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            </label>
+        <input class="modal-state" id="modal-2" type="checkbox" />
+        <div class="modal w-screen">
+            <label class="modal-overlay" for="modal-2"></label>
+            <div (click)="chooseDefaultAvatar($event)" class="modal-content flex flex-col gap-5 max-w-3xl">
+                <label for="modal-2" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
+                <h2 class="text-xl">Default Avatars</h2>
+                <div class="flex flex-wrap">
+                    <ng-container *ngFor="let avatarUrl of defaultAvatarList">
+                        <div [ngClass]="{selected: defaultAvatar == avatarUrl}" class="w-14 h-14 avatar mr-6 mb-6 cursor-pointer">
+                            <img [src]="avatarUrl"  alt="avatar" />
+                        </div>
+                    </ng-container>
+            </div>
+                <div class="flex gap-3">
+                    <button (click)="finalizeDefaultAvatar()" [disabled]="isLoading.avatarBtn || error" [ngClass]="{'btn-loading': isLoading.avatarBtn}" type="button" class="btn btn-block btn-primary">Choose</button>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="form-field pt-5">
+            <div class="form-control flex justify-center">
+                <button (click)="finalizeCustomAvatar()" [disabled]="isLoading.avatarBtn || error" [ngClass]="{'btn-loading': isLoading.avatarBtn}" class="btn btn-primary w-2/12 mr-16 min-w-min">
+                    Use Avatar
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 </ng-container>

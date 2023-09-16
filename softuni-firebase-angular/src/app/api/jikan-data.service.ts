@@ -44,13 +44,14 @@ export class JikanDataService {
     return this.http.get<{ data: SingularGenre[] }>(`${dataApiUrl}genres/anime`);
   }
 
-  getAllAnime$(page: number = 1, genreId?: number): Observable<AnimeList> {
-    if (genreId) {
-      return this.http.get<AnimeList>(`${dataApiUrl}anime?page=${page}&genres=${genreId}`)
-      .pipe(map((anime) => this.formatGenres(anime)));
-    }
-    return this.http.get<AnimeList>(`${dataApiUrl}anime?page=${page}`)
-    .pipe(map((anime) => this.formatGenres(anime)));
+  getAllAnime$(page: number = 1, genreId?: number, searchQuery?: string): Observable<AnimeList> {
+    const pageString = page ? `page=${page}&` : '';
+    const genreIdString = genreId ? `genres=${genreId}&` : '';
+    const searchString = searchQuery ? `q=${searchQuery}&` : '';
+
+    const anime = this.http.get<AnimeList>(`${dataApiUrl}anime?${pageString}${genreIdString}${searchString}`);
+    
+    return anime.pipe(map((anime) => this.formatGenres(anime)));
   }
 
   getAnimeById(id: number): Observable<{data: AnimeData }> {

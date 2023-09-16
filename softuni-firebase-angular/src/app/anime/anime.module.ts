@@ -7,9 +7,11 @@ import { AnimeCardComponent } from './anime-card/anime-card.component';
 import { AnimeListComponent } from './anime-list/anime-list.component';
 import { SharedModule } from '../shared/shared.module';
 import { AnimeDetailComponent } from './anime-detail/anime-detail.component';
+import { MyListComponent } from './my-list/my-list.component';
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
-  declarations: [GenreListComponent, AnimeCardComponent, AnimeListComponent, AnimeDetailComponent],
-  imports: [CommonModule, RouterModule, AnimeRoutingModule, SharedModule],
+  declarations: [GenreListComponent, AnimeCardComponent, AnimeListComponent, AnimeDetailComponent, MyListComponent],
+  imports: [CommonModule, RouterModule, AnimeRoutingModule, SharedModule, CoreModule],
 })
 export class AnimeModule {}

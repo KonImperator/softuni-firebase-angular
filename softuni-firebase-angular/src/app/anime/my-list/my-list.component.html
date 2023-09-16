@@ -1,0 +1,36 @@
+<ng-container *ngIf="!(animeList | async)">
+    <app-spinner></app-spinner>
+</ng-container>
+<ng-container *ngIf="animeList | async as list">
+    <div class="anime-list">
+        <div class="flex w-full overflow-x-auto">
+            <table class="table-hover table">
+                <thead>
+                    <tr>
+                        <th id="header-main" colspan="7">{{listType === 'watchlist' ? 'WATCHLIST' : 'LIKED LIST'}}</th>
+                    </tr>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Anime Name</th>
+                        <th>Source</th>
+                        <th>Aired</th>
+                        <th>Score</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let anime of list; let i = index">
+                        <th>{{i + 1}}</th>
+                        <td><img [src]="anime.image" class="w-14"></td>
+                        <td>{{anime.title}}</td>
+                        <td>{{anime.source}}</td>
+                        <td>{{anime.aired}}</td>
+                        <td>{{anime.score}}</td>
+                        <td><button (click)="toggle(anime)" class="btn btn-primary">{{removedTempStates[anime.mal_id] ? 'Undo' : 'Remove Anime'}}</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-container>

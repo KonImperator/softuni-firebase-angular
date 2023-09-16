@@ -1,19 +1,29 @@
 <ng-container *ngIf="anime">
   <div class="anime-card">
-    <img class="anime-card-image" [src]="anime.images?.webp?.large_image_url" alt="Anime title">
+    <img class="anime-card-image" [src]="anime.image" alt="Anime title">
     <div class="anime-card-details">
       <h2 class="anime-card-title">Anime Title: {{anime.title}}</h2>
       <p class="anime-card-detail"><strong>Episodes: </strong>{{anime.episodes ? anime.episodes : 'N/A'}}</p>
-      <p class="anime-card-detail"><strong>Date Aired: </strong>{{anime.aired?.string ? anime.aired?.string : 'N/A'}}</p>
+      <p class="anime-card-detail"><strong>Date Aired: </strong>{{anime.aired ? anime.aired : 'N/A'}}</p>
       <p class="anime-card-synopsis"><strong>Summary:</strong> {{anime.synopsis ? anime.synopsis : 'N/A'}}</p>
       <p class="anime-card-detail"><strong>Score:</strong> {{anime.score ? anime.score : 'N/A'}}</p>
       <p class="anime-card-detail"><strong>Viewers:</strong> {{anime.members ? anime.members : 'N/A'}}</p>
-      <p class="anime-card-detail"><strong>Studio:</strong> {{anime.studios?.[0]?.name ? anime.studios?.[0]?.name : 'N/A'}}</p>
+      <p class="anime-card-detail"><strong>Studio:</strong> {{anime.studios ? anime.studios : 'N/A'}}</p>
       <p class="anime-card-detail"><strong>Source:</strong> {{anime.source ? anime.source : 'N/A'}} </p>
       <p class="anime-card-detail"><strong>Genre:</strong> {{anime.genres ? anime.genres : 'N/A'}}</p>
       <div *ngIf="user | async" class="buttons">
-        <button (click)="toggleAdd('likedList')" class="btn btn-primary">{{!!inLikedList ? 'Unlike' : 'Like' }}</button>
-        <button (click)="toggleAdd('watchlist')" class="btn btn-primary">{{!!inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist' }}</button>
+        <button (click)="toggleAdd('likedList')" class="btn btn-primary">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 7.78032C10.3391 4.01944 6.47526 3.68514 4.67598 5.3253C3.21118 6.64161 2.50762 9.79656 3.84554 12.7008C6.15231 17.6944 12 20.3166 12 20.3166C12 20.3166 17.8477 17.6944 20.1544 12.7008C21.4924 9.79656 20.7888 6.64161 19.324 5.3253C17.5247 3.68514 13.6609 4.01944 12 7.78032Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+          {{!!inLikedList ? 'Unlike' : 'Like' }}
+        </button>
+        <button (click)="toggleAdd('watchlist')" class="btn btn-primary">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.6548 16.4742L7.33438 19.9261C7.25547 19.989 7.16095 20.0293 7.06092 20.0426C6.96089 20.0559 6.85912 20.0418 6.76648 20.0018C6.67384 19.9618 6.59383 19.8973 6.53499 19.8153C6.47615 19.7334 6.4407 19.6369 6.43243 19.5363V6.17419C6.43243 5.58354 6.66707 5.01709 7.08471 4.59944C7.50236 4.18179 8.06882 3.94716 8.65946 3.94716H15.3405C15.9312 3.94716 16.4976 4.18179 16.9153 4.59944C17.3329 5.01709 17.5676 5.58354 17.5676 6.17419V19.5363C17.5671 19.6407 17.5373 19.7429 17.4815 19.8311C17.4258 19.9193 17.3464 19.9901 17.2523 20.0354C17.1583 20.0807 17.0534 20.0986 16.9497 20.0872C16.8459 20.0757 16.7475 20.0353 16.6656 19.9706L12.3452 16.5187C12.2541 16.4307 12.1346 16.3778 12.0082 16.3697C11.8817 16.3615 11.7565 16.3986 11.6548 16.4742Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+          {{!!inWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist' }}
+        </button>
       </div>
     </div>
   </div>

@@ -1,0 +1,10 @@
+.anime-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#header-main {
+    font-size: x-large;
+    text-align: center;
+    font-weight: bold;
+}

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Subject, takeUntil } from 'rxjs';
+import { combineLatest, Observable, Subject, takeUntil } from 'rxjs';
 import { AnimeList } from 'src/app/api/interfaces/anime';
 import { JikanDataService } from 'src/app/api/jikan-data.service';
 
@@ -9,34 +9,32 @@ import { JikanDataService } from 'src/app/api/jikan-data.service';
   templateUrl: './anime-list.component.html',
   styleUrls: ['./anime-list.component.css'],
 })
+
 export class AnimeListComponent implements OnInit, OnDestroy {
-  animeList: AnimeList | null = null;
-  page: number = 1;
-  genre: number | undefined;
+  animeList$: Observable<AnimeList> | null = null;
 
   unsubscribe$: Subject<void> = new Subject();
 
-  constructor(private jikanDataService: JikanDataService, private route: ActivatedRoute) {}
+  constructor(
+    private jikanDataService: JikanDataService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-
     combineLatest([this.route.queryParams, this.route.params])
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(([queryParams, params]) => {
-      this.page = Number(queryParams['p']) || 1;
-      this.genre = Number(params['genreId']) || undefined
-      this.fetchAnimeList();
-    })
-  
-    
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(([queryParams, params]) => {
+        const page = Number(queryParams['p']) || 1;
+        const genre = Number(params['genreId']) || undefined;
+        const searchQuery = queryParams['q'] || undefined;
+        this.fetchAnimeList(page, genre, searchQuery);
+      });
   }
 
-  fetchAnimeList() {
-    const allAnime$ = this.jikanDataService.getAllAnime$(this.page, this.genre).pipe(takeUntil(this.unsubscribe$));
-    if (this.genre){
-      return allAnime$.subscribe((data) => this.animeList = data);
-    }
-    return allAnime$.subscribe((data) => this.animeList = data);
+  fetchAnimeList(page: number, genre: number | undefined, searchQuery: string | undefined) {
+    this.animeList$ = this.jikanDataService
+      .getAllAnime$(page, genre, searchQuery)
+      .pipe(takeUntil(this.unsubscribe$));
   }
 
   ngOnDestroy(): void {

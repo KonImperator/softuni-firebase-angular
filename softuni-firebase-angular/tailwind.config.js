@@ -2,7 +2,18 @@
 module.exports = {
   content: ["./src/**/*.{html,ts}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundColor: {
+        primary: {
+          dark: '#ff5722',
+          light: '#f57797'
+        }
+      },
+      textColor: {
+        'primary-dark': '#ff5722',
+        'primary-light': '#f57797'
+      },
+    },
   },
   plugins: [require("rippleui")],
   /** @type {import('rippleui').Config} */

@@ -13,8 +13,6 @@ import {
   updatePassword,
 } from '@angular/fire/auth';
 import {
-  addDoc,
-  collection,
   doc,
   DocumentReference,
   Firestore,
@@ -30,15 +28,9 @@ import {
 } from '@angular/fire/storage';
 import {
   BehaviorSubject,
-  catchError,
-  concatMap,
-  from,
+  lastValueFrom,
   Observable,
   of,
-  switchMap,
-  take,
-  tap,
-  throwError,
 } from 'rxjs';
 import { BrowserStorageService } from '../storage.service';
 import { UserDTO, UserStorageData } from './interfaces';
@@ -66,6 +58,14 @@ export class UserService {
       this._isLoading.next(false)
     });
   } 
+
+  private get userDocRef() {
+    const uid = this.localStorageService.get('uid');
+    if (uid) {
+      return doc(this.firestore, 'users', uid);
+    }
+    return null;
+  }
 
   /* LOGIN LOGOUT REGISTER */
 
@@ -104,7 +104,7 @@ export class UserService {
     } catch (error: any) {
       // else delete new user to revert process
       if (userCredential) {
-        userCredential.user.delete();
+        await userCredential.user.delete();
       }
 
       if (error.message.includes('email-already-in-use')) {
@@ -122,14 +122,6 @@ export class UserService {
 
   /* LOGIN LOGOUT REGISTER */
 
-  private get userDocRef() {
-    const user = JSON.parse(this.localStorageService.get('user')!);
-    if (user) {
-      return doc(this.firestore, 'users', user.uid);
-    }
-    return null
-  }
-
   /* FIRESTORE OPERATIONS */
   
   async firebaseSaveUser(userDocRef: DocumentReference, email: string, displayName: string): Promise<void> {
@@ -138,67 +130,113 @@ export class UserService {
   }
 
   async firebaseUpdateUser(userData: {displayName?: string, photoURL: string, email?: string}) {
-    const userDocRef = this.userDocRef;
-      if (userDocRef) {
-        return from(updateDoc(userDocRef, userData));
+      if (this.userDocRef) {
+        return await updateDoc(this.userDocRef, userData);
       }
-       return throwError(() => new Error('auth/missing-credentials'));
+      throw new Error('Must be logged in to change profile image');
   }
 
   /* FIRESTORE OPERATIONS */
 
   /* PROFILE UPDATES */
+
+  async editProfile({ displayName, email, password }: UserDTO) {
+    if (!this.user) {
+      throw new Error('auth/missing-credentials');
+    }
+
+    try {
+      
+      const updatedData: any = {};
+      this.user.displayName !== displayName ? updatedData.displayName = displayName : null;
+      this.user.email !== email ? updatedData.email = email : null;
+
+      if (!Object.keys(updatedData).length) {
+        console.log('No data changed')
+        return;
+      }
+
+      if (email && this.user.email !== email) {
+        await this.reauthenticateUser(password!)
+        await updateEmail(this.user, email)
+      }
+      
+      this.localStorageService.saveUser(updatedData);
+      
+      await updateProfile(this.user, updatedData)
+      await this.firebaseUpdateUser(updatedData);
+    } catch (error: any) {
+      this.handleErrors(error);
+    }
+  }
+
+  async updateAvatar(avatar: File) {
+    try {
+      if (!avatar || !this.user) {
+        return;
+      }
+      const photoURL = await lastValueFrom(this.uploadFileToStorage(avatar, this.user.uid));
+      this.localStorageService.saveUser({photoURL});
+      await updateProfile(this.user, {photoURL});
+      await this.firebaseUpdateUser({photoURL});
+   } catch (err) {
+      const error = new Error('storage/upload-failed');
+      this.handleErrors(error);
+   }
+  }
+
+  async changePassword(currPass: string, newPass: string) {
+    try {
+      await this.reauthenticateUser(currPass),
+      await updatePassword(this.user!, newPass)
+    } catch (err: any) {
+      this.handleErrors(err);
+    }
+  }
   
-  editProfile({ displayName, email, password, avatar }: UserDTO) {
-    return this.user$.pipe(
-      take(1),
-      switchMap((user) => {
-        if (!user) {
-          // if user is not logged in, throw error
-          throw new Error('auth/missing-credentials');
-        }
-        // if user is present, reauthenticate
-        return this.reauthenticateUser(password!).pipe(
-          switchMap(() => this.uploadFileToStorage(avatar, user.uid)),
-          switchMap((photoURL) => {
-            const updatedData: any = {};
-            photoURL ? updatedData.photoURL = photoURL : null;
-            user.displayName !== displayName ? updatedData.displayName = displayName : null;
-            user.email !== email ? updatedData.email = email : null;
-            if (Object.keys(updatedData).length) {
-              return from(this.firebaseUpdateUser(updatedData)).pipe(
-                tap(() => {
-                  this.localStorageService.saveUser(updatedData);
-                  from(updateProfile(user!, updatedData));
-                }),
-                concatMap(() => {
-                  console.log('updating email address')
-                  if (user!.email !== email) {
-                    return from(updateEmail(user!, email!))
-                  }
-                  this.localStorageService.set('email', email)
-                  return of(null);
-                })
-              );
-            }
-            return of('');
-          })
-        );
-      }),
-      catchError((error) => this.handleErrors(error))
-    );
-  }
+  // editProfile({ displayName, email, password, avatar }: UserDTO) {
+  //   return this.user$.pipe(
+  //     take(1),
+  //     switchMap((user) => {
+  //       if (!user) {
+  //         // if user is not logged in, throw error
+  //         throw new Error('auth/missing-credentials');
+  //       }
+  //       // if user is present, reauthenticate
+  //       return this.reauthenticateUser(password!).pipe(
+  //         switchMap(() => this.uploadFileToStorage(avatar, user.uid)),
+  //         switchMap((photoURL) => {
+  //           const updatedData: any = {};
+  //           photoURL ? updatedData.photoURL = photoURL : null;
+  //           user.displayName !== displayName ? updatedData.displayName = displayName : null;
+  //           user.email !== email ? updatedData.email = email : null;
+  //           if (Object.keys(updatedData).length) {
+  //             return from(this.firebaseUpdateUser(updatedData)).pipe(
+  //               tap(() => {
+  //                 this.localStorageService.saveUser(updatedData);
+  //                 from(updateProfile(user!, updatedData));
+  //               }),
+  //               concatMap(() => {
+  //                 console.log('updating email address')
+  //                 if (user!.email !== email) {
+  //                   return from(updateEmail(user!, email!))
+  //                 }
+  //                 this.localStorageService.set('email', email)
+  //                 return of(null);
+  //               })
+  //             );
+  //           }
+  //           return of('');
+  //         })
+  //       );
+  //     }),
+  //     catchError((error) => this.handleErrors(error))
+  //   );
+  // }
 
-  changePassword(currPass: string, newPass: string) {
-    return this.reauthenticateUser(currPass).pipe(
-        tap(() => from(updatePassword(this.user!, newPass))),
-        catchError((err) => this.handleErrors(err))
-      )
-  }
-
-  reauthenticateUser(password: string) {
+  async reauthenticateUser(password: string) {
     const credentials = EmailAuthProvider.credential(this.user!.email!, password!);
-    return from(reauthenticateWithCredential(this.user!, credentials))
+    return await reauthenticateWithCredential(this.user!, credentials)
   }
 
   /* PROFILE UPDATES */
@@ -217,7 +255,8 @@ export class UserService {
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             unsubscribe();
             observer.next(url);
-            console.log('Upload Completed');
+            observer.complete();
+            console.log('Upload Completed', url);
           });
         },
         error: (err) => {
@@ -231,29 +270,36 @@ export class UserService {
 
   handleErrors(error: Error) {
     if (error.message.includes('auth/wrong-password') || error.message.includes('auth/invalid-password')) {
-      return throwError( () => 'Incorrect password provided.');
+      // return throwError( () => 'Incorrect password provided.');
+      throw new Error('Incorrect password provided.');
     }
 
     if (error.message.includes('auth/email-already-in-use')) {
-        return throwError( () => 'The email address is already in use by another account.');
+        // return throwError( () => 'The email address is already in use by another account.');
+      throw new Error('The email address is already in use by another account.');
     }
 
     if (error.message.includes('auth/invalid-email')) {
-        return throwError( () => 'Invalid email format.');
+        // return throwError( () => 'The email address invalid.');
+      throw new Error('The email address invalid.');
     }
 
     if (error.message.includes('auth/too-many-requests')) {
-      return throwError( () => 'Too many wrong password entries, try again later or reset your password.');
+      // return throwError( () => 'Too many wrong password entries, try again later or reset your password.');
+      throw new Error('Too many wrong password entries, try again later or reset your password.');
     }
 
     if (error.message.includes('auth/missing-credentials')) {
-      return throwError( () => 'Missing user credentials: Authentication required');
+      // return throwError( () => 'Missing user credentials: Authentication required');
+      throw new Error('Missing user credentials: Authentication required');
     }
 
     if (error.message.includes('storage/upload-failed')) {
-      return throwError( () => 'Failed to upload image.');
+      // return throwError( () => 'Failed to upload image.');
+      throw new Error('Failed to upload image.');
     }
 
-    return throwError( () => 'An unexpected error occurred. Please try again later.');
+    // return throwError( () => 'An unexpected error occurred. Please try again later.');
+    throw new Error('An unexpected error occurred. Please try again later.');
   }
 }

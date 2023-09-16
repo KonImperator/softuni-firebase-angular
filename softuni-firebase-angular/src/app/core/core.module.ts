@@ -20,7 +20,8 @@ import { SearchComponent } from './search/search.component';
   exports: [
     HeaderComponent,
     FooterComponent,
-    HomeComponent
+    HomeComponent,
+    SearchComponent,
   ]
 })
 export class CoreModule { }

@@ -1,7 +1,7 @@
 <div class="pagination-wrapper">
     <div class="pagination">
         <!-- first page -->
-        <a routerLink="{{currentRoute}}" [queryParams]="{p: 1}" class="btn"><svg width="24" height="24"
+        <a routerLink="{{currentRoute}}" [queryParams]="getPageParams('first')" class="btn"><svg width="24" height="24"
                 viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M17.1257 18L12.1857 13.06C12.0454 12.9214 11.934 12.7564 11.858 12.5744C11.782 12.3924 11.7428 12.1972 11.7428 12C11.7428 11.8028 11.782 11.6076 11.858 11.4256C11.934 11.2436 12.0454 11.0786 12.1857 10.94L17.1257 6"
@@ -12,7 +12,7 @@
             </svg>
         </a>
         <!-- previous page -->
-        <a routerLink="{{currentRoute}}" [queryParams]="{p: animeList.pagination.current_page - 1}"
+        <a routerLink="{{currentRoute}}" [queryParams]="getPageParams('prev')"
             *ngIf="animeList.pagination.current_page > 1" class="btn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -22,12 +22,12 @@
         </a>
 
         <ng-container *ngFor="let el of generatePages(animeList.pagination)">
-            <a routerLink="{{currentRoute}}" [queryParams]="{p: el.page}" class="btn"
-                [ngClass]="{'btn-active': el.isCurrentPage}">{{el.page}}</a>
+            <a routerLink="{{currentRoute}}" [queryParams]="el.params" class="btn"
+                [ngClass]="{'btn-active': el.isCurrentPage}">{{el.params.p}}</a>
         </ng-container>
 
         <!-- next page -->
-        <a routerLink="{{currentRoute}}" [queryParams]="{p: animeList.pagination.current_page + 1}"
+        <a routerLink="{{currentRoute}}" [queryParams]="getPageParams('next')"
             *ngIf="animeList.pagination.has_next_page" class="btn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -37,7 +37,7 @@
         </a>
 
         <!-- last page -->
-        <a routerLink="{{currentRoute}}" [queryParams]="{p: animeList.pagination.last_visible_page}" class="btn"><svg
+        <a routerLink="{{currentRoute}}" [queryParams]="getPageParams('last')" class="btn"><svg
                 width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                     d="M6.7428 18L11.6828 13.06C11.8231 12.9214 11.9345 12.7564 12.0105 12.5744C12.0865 12.3924 12.1257 12.1972 12.1257 12C12.1257 11.8028 12.0865 11.6076 12.0105 11.4256C11.9345 11.2436 11.8231 11.0786 11.6828 10.94L6.7428 6"

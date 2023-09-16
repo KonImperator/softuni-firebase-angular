@@ -1,12 +1,12 @@
 import { Component, Input, OnDestroy, OnInit, Inject } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Subject, Subscription, takeUntil } from 'rxjs';
 import { AnimeList, Pagination } from 'src/app/api/interfaces/anime';
 import { WINDOW } from '../window.token';
 
 interface Page {
   isCurrentPage: boolean;
-  page: number;
+  params: any;
 }
 
 @Component({
@@ -17,21 +17,41 @@ interface Page {
 export class PaginationComponent implements OnInit, OnDestroy {
   @Input() animeList: AnimeList;
   currentRoute: string = this.stripQueryParams(this.router.url);
-  routeSubscription: Subscription;
+  queryParams: any;
+  pageDistance: number = 3;
+  unsubscribe: Subject<void> = new Subject();
 
-  constructor(private router: Router, @Inject(WINDOW) private window: Window ){}
+  constructor(private route: ActivatedRoute, private router: Router, @Inject(WINDOW) private window: Window ){}
 
   ngOnInit(): void {
-    this.routeSubscription = this.router.events.subscribe((event) => {
+    this.router.events
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = this.stripQueryParams(this.router.url);
-        this.window.scrollTo(0, 0)
+        this.window.scrollTo(0, 0);
       }
     })
+
+    this.route.queryParams
+    .pipe(takeUntil(this.unsubscribe))
+    .subscribe((params) => { this.queryParams = params });
   }
 
   ngOnDestroy(): void {
-    this.routeSubscription.unsubscribe();
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
+  getPageParams(type: 'next' | 'prev' | 'first' | 'last' | 'current', page?: number) {
+    const outputs = {
+      'first': {...this.queryParams, p: 1},
+      'next': {...this.queryParams, p: this.animeList.pagination.current_page + 1},
+      'prev': {...this.queryParams, p: this.animeList.pagination.current_page - 1},
+      'last': {...this.queryParams, p: this.animeList.pagination.last_visible_page},
+      'current': {...this.queryParams, p: page}
+    }
+    return outputs[type]
   }
 
   stripQueryParams(route: string) {
@@ -44,10 +64,12 @@ export class PaginationComponent implements OnInit, OnDestroy {
   generatePages(pagination: Pagination): Page[] {
     const currPage = pagination.current_page;
     const lastPage = pagination.last_visible_page;
+    
     const pages = [];
-    for (let i = currPage - 3; i <= currPage + 3; i++) {
+
+    for (let i = currPage - this.pageDistance; i <= currPage + this.pageDistance; i++) {
       if (i >= 1 && i <= lastPage) {
-        pages.push({ isCurrentPage: currPage === i, page: i });
+        pages.push({ isCurrentPage: currPage === i, params: this.getPageParams('current', i) });
       }
     }
     return pages;

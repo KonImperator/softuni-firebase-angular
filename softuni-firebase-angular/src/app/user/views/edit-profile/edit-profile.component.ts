@@ -1,11 +1,13 @@
-import { Component, OnInit, NgZone } from '@angular/core';
-import { updateProfile, User } from '@angular/fire/auth';
+import { Component, OnInit } from '@angular/core';
+import { updateProfile } from '@angular/fire/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { take } from 'rxjs';
 import { defaultAvatarList } from 'src/assets/avatars/defaultAvatars';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../../user.service';
 import { BrowserStorageService } from 'src/app/storage.service';
+import { LoadingStates } from '../../interfaces';
+
+type Button = 'avatarBtn' | 'saveBtn';
 
 @Component({
   selector: 'app-edit-profile',
@@ -14,22 +16,25 @@ import { BrowserStorageService } from 'src/app/storage.service';
 })
 export class EditProfileComponent implements OnInit {
   file: File | null = null;
-  user: User | null = this.userService.user;
   form: FormGroup;
   error: string | null = null;
   success: string | null = null;
+  timeout: NodeJS.Timeout | null;
 
-  defaultAvatarList: string[] = [...defaultAvatarList];
+  defaultAvatarList: string[] = defaultAvatarList;
   defaultAvatar: string;
 
-  isLoading: boolean = false;
+  isLoading: LoadingStates = { avatarBtn: false, saveBtn: false };
 
   constructor(
     private userService: UserService,
     private fb: FormBuilder,
-    private zone: NgZone,
     private localStorageService: BrowserStorageService
   ) {}
+
+  get user() {
+    return this.userService.user;
+  }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -47,6 +52,8 @@ export class EditProfileComponent implements OnInit {
     this.success = null;
   }
 
+  // *** For uploading custom avatar //
+
   onUpload(event: Event) {
     const target = event.target as HTMLInputElement;
     if (!target.files || target.files.length <= 0) {
@@ -63,50 +70,68 @@ export class EditProfileComponent implements OnInit {
     this.file = file;
   }
 
-  setDefaultAvatar(event: Event) {
+  finalizeCustomAvatar() {
+    if (!this.file || !this.user) {
+      return;
+    }
+
+    this.isLoading.avatarBtn = true;
+
+    this.userService
+      .updateAvatar(this.file)
+      .then(() => this.handleCompleteMessage('avatarBtn'))
+      .catch((err) => this.handleCompleteMessage('avatarBtn', err));
+  }
+  // For uploading custom avatar *** //
+
+  // *** For choosing default avatar //
+  chooseDefaultAvatar(event: Event) {
+    // event delegation for clicking on avatar
     if (event.target instanceof HTMLImageElement) {
-      this.defaultAvatar = event.target.src.replace(`${environment.appDomainUrl}`, '');
+      this.defaultAvatar = event.target.src.replace(`${environment.appDomainUrl}`, ''); // unifying image url format
     }
   }
 
   finalizeDefaultAvatar() {
-    updateProfile(this.user!, { photoURL: this.defaultAvatar });
-    this.localStorageService.set('photoURL', this.defaultAvatar)
-    this.userService.firebaseUpdateUser({ photoURL: this.defaultAvatar });
+    this.isLoading.avatarBtn = true;
+
+    this.userService
+      .firebaseUpdateUser({ photoURL: this.defaultAvatar })
+      .then(() => {
+        updateProfile(this.user!, { photoURL: this.defaultAvatar });
+        this.localStorageService.set('photoURL', this.defaultAvatar);
+        this.handleCompleteMessage('avatarBtn');
+      })
+      .catch((err) => this.handleCompleteMessage('avatarBtn', err));
   }
+  // For choosing default avatar *** //
 
   onSubmit() {
     if (this.form.invalid) {
       return alert('Invalid input');
     }
-    console.log('submitting form');
 
-    this.isLoading = true;
+    this.isLoading.saveBtn = true;
 
     this.userService
-      .editProfile({ ...this.form.value, avatar: this.file || '' })
-      .pipe(take(1))
-      .subscribe({
-        complete: () => {
-          // isLoading seems to be set outside of the current zone but I couldn't find out why
-          // it doesn't reflect in the template so zone.run is used to bring it inside
-          this.zone.run(() => {
-            this.handleCompleteMessage();
-          });
-        },
-        error: (err) => {
-          this.handleCompleteMessage(err)
-        },
-      });
+      .editProfile(this.form.value)
+      .then(() => this.handleCompleteMessage('saveBtn'))
+      .catch((err) => this.handleCompleteMessage('saveBtn', err.message));
   }
 
-    handleCompleteMessage(err?: string) {
-      this.isLoading = false
-      err ? this.error = err : this.success = 'Profile updated successfully!';
-      const timeout = setTimeout(() => {
+  handleCompleteMessage(buttonType: Button, err?: string) {
+      this.isLoading[buttonType] = false;
+      
+      if (this.timeout) clearTimeout(this.timeout);
+
+      err
+      ? (this.error = err)
+      : (this.success = 'Profile updated successfully!');
+
+      this.timeout = setTimeout(() => {
         this.success = null;
-        this.error = null
-        clearTimeout(timeout);
+        this.error = null;
+        this.timeout = null;
       }, 5000);
-    }
-}
+    };
+  }

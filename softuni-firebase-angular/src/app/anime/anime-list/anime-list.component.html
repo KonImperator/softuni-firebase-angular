@@ -1,7 +1,8 @@
-<ng-container *ngIf="!animeList">
+<ng-container *ngIf="!(animeList$ | async)">
     <app-spinner></app-spinner>
 </ng-container>
-<ng-container *ngIf="animeList">
+    <app-search></app-search>
+<ng-container *ngIf="animeList$ | async as animeList">
     <app-pagination [animeList]="animeList"></app-pagination>
     <div class="anime-list">
         <app-anime-card *ngFor="let anime of animeList.data" [anime]="anime"></app-anime-card>

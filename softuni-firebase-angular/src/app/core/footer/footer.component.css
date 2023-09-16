@@ -1,12 +1,11 @@
 .footer {
+  position: relative;
   height: 2.9rem;
   display: grid;
   grid-template-columns: 0.5fr 1fr 0.5fr;
   align-items: center;
   justify-items: center;
   width: 100%;
-  position: relative;
-  bottom: 0;
   padding: 0 20px;
 }
 

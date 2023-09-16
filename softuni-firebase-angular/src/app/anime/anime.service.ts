@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { collection, deleteDoc, doc, Firestore, getDoc, getDocs, setDoc } from '@angular/fire/firestore';
-import { AnimeData, StoredAnime } from '../api/interfaces/anime';
+import { AnimeData, FormattedAnime } from '../api/interfaces/anime';
 import { BrowserStorageService } from '../storage.service';
-
+import { MyList } from './types'
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +12,7 @@ export class AnimeService {
 
   constructor(private firestore: Firestore, private localStorageService: BrowserStorageService) {}
 
-  private formatAnime(anime: AnimeData) {
+  formatAnime(anime: AnimeData): FormattedAnime {
     return {
       mal_id: anime.mal_id,
       title: anime.title || 'N/A',
@@ -24,33 +24,32 @@ export class AnimeService {
       studios: anime.studios?.[0]?.name || 'N/A',
       source: anime.source || 'N/A',
       genres: anime.genres || 'N/A',
-    }
+      image: anime.images?.webp?.large_image_url || 'N/A'
+    } as FormattedAnime
   }
 
-  async isAnimeInList(animeId: number, list: string): Promise<boolean> {
+  async isAnimeInList(animeId: number, list: MyList): Promise<boolean> {
     const userDocRef = doc(this.firestore, 'users', this.uid);
     const likedAnimeDocRef = doc(userDocRef, list, animeId.toString());
     const snapshot = await getDoc(likedAnimeDocRef);
     return snapshot.exists();
   }
 
-  async toggleInList(anime: AnimeData, list: string): Promise<void> {
+  async toggleInList(anime: FormattedAnime, list: MyList): Promise<void> {
     const isInList = await this.isAnimeInList(anime.mal_id, list);
-
-    const formattedAnime = this.formatAnime(anime)
     const userDocRef = doc(this.firestore, 'users', this.uid);
-    const animeDocRef = doc(userDocRef, list, formattedAnime.mal_id.toString());
+    const animeDocRef = doc(userDocRef, list, anime.mal_id.toString());
     
     if (isInList) {
       return await deleteDoc(animeDocRef);
     }
-    await setDoc(animeDocRef, formattedAnime);
+    await setDoc(animeDocRef, anime);
   }
 
-  async getAllAnimeInList(list: string): Promise<StoredAnime[]> {
+  async getAllAnimeInList(list: MyList): Promise<FormattedAnime[]> {
     const userDocRef = doc(this.firestore, 'users', this.uid);
     const animeInListSnapshot = await getDocs(collection(userDocRef, list));
-    return animeInListSnapshot.docs.map(doc => doc.data() as StoredAnime);
+    return animeInListSnapshot.docs.map(doc => doc.data() as FormattedAnime);
   }
  
 }

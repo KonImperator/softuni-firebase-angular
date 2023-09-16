@@ -9,6 +9,7 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   const loginRequired: boolean = route.data.loginRequired;
 
   return userService.user$.pipe(
+    // mapping result to boolean
     map((user) => {
       // if route requires authentication
       if (loginRequired) {

@@ -40,7 +40,6 @@ export class BrowserStorageService {
     const email = this.get('email');
     const uid = this.get('uid');
     const photoURL = this.get('photoURL');
-    const user = { displayName, email, uid, photoURL };
-    return user;
+    return { displayName, email, uid, photoURL };
   }
 }

@@ -1,4 +1,4 @@
-export interface StoredAnime {
+export interface FormattedAnime {
   mal_id: number
   title: string | 'N/A';
   episodes: number | 'N/A';
@@ -9,6 +9,7 @@ export interface StoredAnime {
   studios: string | 'N/A';
   source: string | 'N/A';
   genres: string | 'N/A';
+  image: string | 'N/A';
 }
 
 export interface AnimeList {
