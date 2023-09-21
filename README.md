@@ -34,7 +34,7 @@
 - **Anime Module**: Deals with all things anime, from listing to detailed views.
 - **Environments**: Separate environments.
 
-# SoftuniFirebaseAngular
+## Default Info
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.4.
 
