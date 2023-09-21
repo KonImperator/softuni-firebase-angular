@@ -1,3 +1,4 @@
+<header>
 <nav class="navbar">
     <div class="navbar-start">
         <a class="navbar-item logo" routerLink="/">
@@ -68,10 +69,10 @@
       </ng-container>
 	</div>
 </nav>
-
+</header>
 
 <ng-template #AnonUser>
-<div *ngIf="isLoading$ | async" class="avatar avatar-ring avatar-md">
+<div *ngIf="(isLoading$ | async) || !(user$ | async)" class="avatar avatar-ring avatar-md">
     <img src="/assets/anon-user.png" alt="avatar" />
 </div>
 </ng-template>

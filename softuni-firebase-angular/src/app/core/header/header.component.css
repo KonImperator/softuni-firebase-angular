@@ -44,7 +44,7 @@ a {
 
 @media (prefers-color-scheme: dark) {
   .navbar-center a:hover {
-      color: rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
   }
 }
 

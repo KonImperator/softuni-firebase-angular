@@ -2,7 +2,7 @@
     <app-spinner></app-spinner>
 </ng-container>
 <ng-container *ngIf="animeList | async as list">
-    <div class="anime-list">
+    <div class="anime-list flex">
         <div class="flex w-full overflow-x-auto">
             <table class="table-hover table">
                 <thead>
@@ -22,8 +22,8 @@
                 <tbody>
                     <tr *ngFor="let anime of list; let i = index">
                         <th>{{i + 1}}</th>
-                        <td><img [src]="anime.image" class="w-14"></td>
-                        <td>{{anime.title}}</td>
+                        <td><a routerLink="/anime/{{anime.mal_id}}/{{ anime.title | encodeUri }}"><img [src]="anime.image" class="w-14"></a></td>
+                        <td><a class="font-semibold" routerLink="/anime/{{anime.mal_id}}/{{ anime.title | encodeUri }}">{{anime.title}}</a></td>
                         <td>{{anime.source}}</td>
                         <td>{{anime.aired}}</td>
                         <td>{{anime.score}}</td>

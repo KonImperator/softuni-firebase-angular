@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { AnimeList, Pagination } from 'src/app/api/interfaces/anime';
 import { WINDOW } from '../window.token';
 
@@ -18,7 +18,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
   @Input() animeList: AnimeList;
   currentRoute: string = this.stripQueryParams(this.router.url);
   queryParams: any;
-  pageDistance: number = 3;
+  pagesBeforeAfter: number = 3;
   unsubscribe: Subject<void> = new Subject();
 
   constructor(private route: ActivatedRoute, private router: Router, @Inject(WINDOW) private window: Window ){}
@@ -67,8 +67,8 @@ export class PaginationComponent implements OnInit, OnDestroy {
     
     const pages = [];
 
-    for (let i = currPage - this.pageDistance; i <= currPage + this.pageDistance; i++) {
-      if (i >= 1 && i <= lastPage) {
+    for (let i = currPage - this.pagesBeforeAfter; i <= currPage + this.pagesBeforeAfter; i++) {
+      if (i > 0 && i <= lastPage) {
         pages.push({ isCurrentPage: currPage === i, params: this.getPageParams('current', i) });
       }
     }

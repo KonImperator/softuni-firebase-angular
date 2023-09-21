@@ -8,9 +8,12 @@ import { MyList } from './types'
 })
 export class AnimeService {
 
-  uid = this.localStorageService.get('uid');
-
   constructor(private firestore: Firestore, private localStorageService: BrowserStorageService) {}
+
+  private get userDocRef(){
+    const uid = this.localStorageService.get('uid');
+    return doc(this.firestore, 'users', uid);
+  }
 
   formatAnime(anime: AnimeData): FormattedAnime {
     return {
@@ -29,16 +32,14 @@ export class AnimeService {
   }
 
   async isAnimeInList(animeId: number, list: MyList): Promise<boolean> {
-    const userDocRef = doc(this.firestore, 'users', this.uid);
-    const likedAnimeDocRef = doc(userDocRef, list, animeId.toString());
+    const likedAnimeDocRef = doc(this.userDocRef, list, animeId.toString());
     const snapshot = await getDoc(likedAnimeDocRef);
     return snapshot.exists();
   }
 
   async toggleInList(anime: FormattedAnime, list: MyList): Promise<void> {
     const isInList = await this.isAnimeInList(anime.mal_id, list);
-    const userDocRef = doc(this.firestore, 'users', this.uid);
-    const animeDocRef = doc(userDocRef, list, anime.mal_id.toString());
+    const animeDocRef = doc(this.userDocRef, list, anime.mal_id.toString());
     
     if (isInList) {
       return await deleteDoc(animeDocRef);
@@ -47,8 +48,7 @@ export class AnimeService {
   }
 
   async getAllAnimeInList(list: MyList): Promise<FormattedAnime[]> {
-    const userDocRef = doc(this.firestore, 'users', this.uid);
-    const animeInListSnapshot = await getDocs(collection(userDocRef, list));
+    const animeInListSnapshot = await getDocs(collection(this.userDocRef, list));
     return animeInListSnapshot.docs.map(doc => doc.data() as FormattedAnime);
   }
  

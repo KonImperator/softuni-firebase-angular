@@ -1,13 +1,13 @@
 :host {
-    width: 75%;
-    margin-top: 1.75rem;
-    margin-left: 4rem;
+  width: 75%;
+  margin-top: 1.75rem;
+  margin-left: 4rem;
 }
 
 .input-flex-grow {
-    max-width: none;
-  }
+  max-width: none;
+}
 
-  .selected {
-    border: 2px solid rgb(255, 2, 2);
-  }
+.selected {
+  border: 2px solid rgb(255, 2, 2);
+}
