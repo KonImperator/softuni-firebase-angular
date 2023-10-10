@@ -24,6 +24,7 @@
         this.animeList = this.animeService.getAllAnimeInList('watchlist');
         this.listType = 'watchlist';
       }
+      this.animeList?.then((list) => console.log('List >', list))
     }
 
     toggle(anime: FormattedAnime) {

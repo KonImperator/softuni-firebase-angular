@@ -8,3 +8,14 @@
     text-align: center;
     font-weight: bold;
 }
+
+.empty-block {
+    display: flex;
+    height: 70vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.empty-block p {
+    font-size: 36px;
+}

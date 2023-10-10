@@ -33,4 +33,9 @@
             </table>
         </div>
     </div>
+    <ng-container *ngIf="!(animeList | async) || (animeList | async)?.length == 0">
+        <div class="empty-block">
+           <p>Nothing here yet</p> 
+        </div>
+    </ng-container>
 </ng-container>
