@@ -3,7 +3,7 @@
 .navbar {
   font-family: 'VT323', monospace;
   line-height: 1;
-  max-height: 4rem;
+  height: 4rem;
 }
 
 .menu-item a:hover {

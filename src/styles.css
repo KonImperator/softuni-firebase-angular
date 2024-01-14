@@ -17,6 +17,10 @@ body {
     font-family: 'Roboto';
 }
 
+main {
+    min-height: calc(100vh - 8rem);
+}
+
 @media (prefers-color-scheme: light) {
 
     body,

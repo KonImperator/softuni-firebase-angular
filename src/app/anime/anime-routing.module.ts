@@ -13,27 +13,33 @@ const routes: Routes = [
         path: '',
         pathMatch: 'full',
         component: AnimeListComponent,
+        title: 'Anime Galaxy - Anime List'
       },
       {
         path: 'genre',
         pathMatch: 'full',
         component: GenreListComponent,
+        title: 'Anime Galaxy - Genres'
       },
       {
         path: ':id/:animeName',
         component: AnimeDetailComponent,
+        title: 'Anime Galaxy - Details'
       },
       {
         path: 'genre/:genreId/:genreName',
         component: AnimeListComponent,
+        title: 'Anime Galaxy - Anime List'
       },
       {
         path: 'list-liked',
-        component: MyListComponent
+        component: MyListComponent,
+        title: 'Anime Galaxy - My lists'
       },
       {
         path: 'list-watched',
-        component: MyListComponent
+        component: MyListComponent,
+        title: 'Anime Galaxy - My lists'
       }
     ],
   },

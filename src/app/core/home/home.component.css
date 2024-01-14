@@ -8,9 +8,10 @@
   text-align: center;
   background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/fs/475683105464265.6216596233314.png');
   background-position: center;
+  background-size: cover;
   background-repeat: no-repeat;
   position: relative;
-  height: 85.1vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

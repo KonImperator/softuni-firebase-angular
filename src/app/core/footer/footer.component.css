@@ -1,6 +1,6 @@
 .footer {
   position: relative;
-  height: 2.9rem;
+  height: 4rem;
   display: grid;
   grid-template-columns: 0.5fr 1fr 0.5fr;
   align-items: center;
