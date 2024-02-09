@@ -16,6 +16,15 @@
 
     constructor(private animeService: AnimeService, private router: Router) {}
 
+    getRandomColor(id: number) {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return !this.removedTempStates[id] ? color : 'red'
+    }
+
     ngOnInit(): void {
       if (this.router.url.endsWith('list-liked')) {
         this.animeList = this.animeService.getAllAnimeInList('likedList');
@@ -24,7 +33,6 @@
         this.animeList = this.animeService.getAllAnimeInList('watchlist');
         this.listType = 'watchlist';
       }
-      this.animeList?.then((list) => console.log('List >', list))
     }
 
     toggle(anime: FormattedAnime) {

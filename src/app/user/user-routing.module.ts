@@ -9,18 +9,20 @@ import { PasswordChangeComponent } from './views/password-change/password-change
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/' },
-  { path: 'login', component: LoginComponent, data: { loginRequired: false }, title: 'Anime Galaxy - Login', canActivate: [AuthGuard] },
-  { path: 'register', component: RegisterComponent, data: { loginRequired: false }, title: 'Anime Galaxy - Register', canActivate: [AuthGuard] },
-  {
-    path: 'profile',
-    component: ProfileComponent,
-    title: 'Anime Galaxy - Profile',
-    children: [
-      { path: '', pathMatch:'full', redirectTo: 'edit' },
-      { path: 'edit', component: EditProfileComponent, data: { loginRequired: true }, canActivate: [AuthGuard] },
-      { path: 'change-password', component: PasswordChangeComponent, data: { loginRequired: true }, title: 'Anime Galaxy - Edit Password', canActivate: [AuthGuard] },
-    ],
-  },
+  { path: 'user', children: [
+    { path: 'login', component: LoginComponent, data: { loginRequired: false }, title: 'Anime Galaxy - Login', canActivate: [AuthGuard] },
+    { path: 'register', component: RegisterComponent, data: { loginRequired: false }, title: 'Anime Galaxy - Register', canActivate: [AuthGuard] },
+    {
+      path: 'profile',
+      component: ProfileComponent,
+      title: 'Anime Galaxy - Profile',
+      children: [
+        { path: '', pathMatch:'full', redirectTo: 'edit' },
+        { path: 'edit', component: EditProfileComponent, data: { loginRequired: true }, canActivate: [AuthGuard] },
+        { path: 'change-password', component: PasswordChangeComponent, data: { loginRequired: true }, title: 'Anime Galaxy - Edit Password', canActivate: [AuthGuard] },
+      ],
+    },
+  ]}
 ];
 
 @NgModule({

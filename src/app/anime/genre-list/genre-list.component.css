@@ -1,12 +1,9 @@
-.genre-wrapper {
-    min-height: 100vh;
-}
-
 .genre-container {
     padding-top: 20px;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
 .title {
@@ -14,10 +11,12 @@
   font-size: 32px;
 }
 
+.title:not(:first-of-type) {
+  margin-top: 10px;
+}
+
 a.genre-btn {
-  border-radius: 20px;
-    margin-right: 20px;
-    margin-bottom: 15px;
+    border-radius: 20px;
     min-width: 200px;
     padding: 10px 20px;
     background-color: #f86d02d2;
@@ -33,4 +32,11 @@ a.genre-btn {
     background-color: #ff5722;
     transform: scale(1.05);
     box-shadow: 0px 0px 10px rgba(255, 69, 0, 0.6);
+  }
+
+  @media screen and (max-width: 460px) {
+      a.genre-btn {
+          min-width: fit-content;
+          font-size: 13px;
+      }
   }

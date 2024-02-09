@@ -18,7 +18,7 @@ export class PaginationComponent implements OnInit, OnDestroy {
   @Input() animeList: AnimeList;
   currentRoute: string = this.stripQueryParams(this.router.url);
   queryParams: any;
-  pagesBeforeAfter: number = 3;
+  pagesBeforeAfter: number = 4;
   unsubscribe: Subject<void> = new Subject();
 
   constructor(private route: ActivatedRoute, private router: Router, @Inject(WINDOW) private window: Window ){}

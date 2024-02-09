@@ -1,7 +1,7 @@
 <ng-container *ngIf="user$ | async as user">
-<div class="flex h-screen">
-    <aside class="sidebar h-full justify-start inline-block">
-        <section class="sidebar-title items-center p-4">
+<div class="flex md:flex-row md:items-start mb-6 flex-col items-center">
+    <aside class="md:sidebar md:inline-block justify-start inline-block">
+        <section class="sidebar-title items-center p-4 hidden md:block">
             <label class="whites mx-2 flex h-fit w-full cursor-pointer p-0 hover:bg-gray-4" tabindex="0">
                 <div class="flex flex-row gap-4 p-4">
                     <div class="avatar avatar-md w-14 h-14">
@@ -13,7 +13,7 @@
                 </div>
             </label>
         </section>
-        <section class="sidebar-content h-fit min-h-[20rem] overflow-visible">
+        <section class="sidebar-content h-fit overflow-visible">
             <nav class="menu rounded-md">
                 <section class="menu-section px-4">
                     <ul class="menu-items">

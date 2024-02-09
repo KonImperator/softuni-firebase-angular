@@ -14,7 +14,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { AnimeModule } from './anime/anime.module';
 import { SharedModule } from './shared/shared.module';
-
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +23,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     CoreModule,
     AnimeModule,
+    UserModule,
     SharedModule,
     AppRoutingModule,
     HttpClientModule,

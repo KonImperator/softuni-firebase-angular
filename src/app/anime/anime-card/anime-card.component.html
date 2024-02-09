@@ -1,17 +1,17 @@
-<div *ngIf="anime" class="anime-card">
-    <div class="image-wrapper">
-        <img class="anime-card-image" [src]="anime.images?.webp?.large_image_url" alt="Anime title">
-        <a routerLink="/anime/{{anime.mal_id}}/{{ anime.title | encodeUri }}" class="btn btn-primary btn-details">Details</a>
+<div *ngIf="anime" class="anime-card md:flex justify-center p-[1rem] text-[13px] transition-all duration-400 ease-in-out">
+    <div class="image-wrapper flex flex-col justify-start items-center pb-[1rem]">
+        <img class="anime-card-image w-[200px] object-contain" [src]="anime.images?.webp?.large_image_url" alt="Anime title">
+        <a routerLink="/anime/{{anime.mal_id}}/{{ anime.title | encodeUri }}" class="btn btn-primary btn-details mt-[1rem] max-w-[fit-content]">Details</a>
     </div>
-      <div class="anime-card-details">
-        <h2 class="anime-card-title">Anime Title: {{anime.title}}</h2>
-        <p class="anime-card-detail"><span class="font-bold">Episodes: </span>{{anime.episodes ? anime.episodes : 'N/A'}}</p>
-        <p class="anime-card-detail"><span class="font-bold">Date Aired: </span><time>{{anime.aired?.string ? anime.aired?.string : 'N/A'}}</time></p>
-        <p class="anime-card-synopsis"><span class="font-bold">Summary:</span> {{anime.synopsis ? (anime.synopsis | slice:0:80) : 'N/A'}}...</p>
-        <p class="anime-card-detail"><span class="font-bold">Score:</span> {{anime.score ? anime.score : 'N/A'}}</p>
-        <p class="anime-card-detail"><span class="font-bold">Viewers:</span> {{anime.members ? anime.members : 'N/A'}}</p>
-        <p class="anime-card-detail"><span class="font-bold">Studio:</span> {{anime.studios?.[0]?.name ? anime.studios?.[0]?.name : 'N/A'}}</p>
-        <p class="anime-card-detail"><span class="font-bold">Source:</span> {{anime.source ? anime.source : 'N/A'}} </p>
-        <p class="anime-card-detail"><span class="font-bold">Genre:</span> {{anime.genres ? anime.genres : 'N/A'}}</p>
+    <div class="anime-card-details pl-[20px]">
+        <h2 class="anime-card-title mb-[10px] font-bold max-w-[25ch]">Anime Title: {{anime.title}}</h2>
+        <p class="anime-card-detail mb-[5px] max-w-[25ch]"><span class="font-bold">Episodes: </span>{{anime.episodes ? anime.episodes : 'N/A'}}</p>
+        <p class="anime-card-detail mb-[5px] max-w-[25ch]"><span class="font-bold">Date Aired: </span><time>{{anime.aired?.string ? anime.aired?.string : 'N/A'}}</time></p>
+        <p class="anime-card-synopsis italic mx-[0px] my-[10px] max-w-[30ch]"><span class="font-bold">Summary:</span> {{anime.synopsis ? (anime.synopsis | slice:0:80) : 'N/A'}}...</p>
+        <p class="anime-card-detail mb-[5px] max-w-[25ch]"><span class="font-bold">Score:</span> {{anime.score ? anime.score : 'N/A'}}</p>
+        <p class="anime-card-detail mb-[5px] max-w-[25ch]"><span class="font-bold">Viewers:</span> {{anime.members ? anime.members : 'N/A'}}</p>
+        <p class="anime-card-detail mb-[5px] max-w-[25ch]"><span class="font-bold">Studio:</span> {{anime.studios?.[0]?.name ? anime.studios?.[0]?.name : 'N/A'}}</p>
+        <p class="anime-card-detail mb-[5px] max-w-[25ch]"><span class="font-bold">Source:</span> {{anime.source ? anime.source : 'N/A'}} </p>
+        <p class="anime-card-detail mb-[5px] max-w-[25ch]"><span class="font-bold">Genre:</span> {{anime.genres ? anime.genres : 'N/A'}}</p>
     </div>
 </div>

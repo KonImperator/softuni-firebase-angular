@@ -2,40 +2,45 @@
     <app-spinner></app-spinner>
 </ng-container>
 <ng-container *ngIf="animeList | async as list">
-    <div class="anime-list flex">
-        <div class="flex w-full overflow-x-auto">
-            <table class="table-hover table">
+    <div class="anime-list">
+        <div class="">
+            <table class="table-hover w-full overflow-hidden">
                 <thead>
                     <tr>
-                        <th id="header-main" colspan="7">{{listType === 'watchlist' ? 'WATCHLIST' : 'LIKED LIST'}}</th>
+                        <!-- Using id since the previous styles are way too specific -->
+                        <th id="header-main" class="dark:bg-[#232323] dark:border-[#1c1b22]" colspan="7">{{listType === 'watchlist' ? 'WATCHLIST' : 'LIKED LIST'}}</th>
                     </tr>
-                    <tr>
-                        <th>#</th>
-                        <th>Image</th>
-                        <th>Anime Name</th>
-                        <th>Source</th>
-                        <th>Aired</th>
-                        <th>Score</th>
-                        <th>Remove</th>
+                    <tr class="border-2 border-solid dark:bg-[#232323] dark:border-[#1c1b22]">
+                        <th class="text-center hidden md:table-cell text-md bg-[inherit] p-[10px]">#</th>
+                        <th class="text-center hidden md:table-cell text-md bg-[inherit] p-[10px]">Image</th>
+                        <th class="text-center hidden md:table-cell text-md bg-[inherit] p-[10px]">Name</th>
+                        <th class="text-center hidden md:table-cell text-md bg-[inherit] p-[10px]">Source</th>
+                        <th class="text-center hidden md:table-cell text-md bg-[inherit] p-[10px]">Aired</th>
+                        <th class="text-center hidden md:table-cell text-md bg-[inherit] p-[10px]">Score</th>
+                        <th class="text-center hidden md:table-cell text-md bg-[inherit] p-[10px]">Remove</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let anime of list; let i = index">
-                        <th>{{i + 1}}</th>
-                        <td><a routerLink="/anime/{{anime.mal_id}}/{{ anime.title | encodeUri }}"><img [src]="anime.image" class="w-14"></a></td>
-                        <td><a class="font-semibold" routerLink="/anime/{{anime.mal_id}}/{{ anime.title | encodeUri }}">{{anime.title}}</a></td>
-                        <td>{{anime.source}}</td>
-                        <td>{{anime.aired}}</td>
-                        <td>{{anime.score}}</td>
-                        <td><button (click)="toggle(anime)" class="btn btn-primary">{{removedTempStates[anime.mal_id] ? 'Undo' : 'Remove Anime'}}</button></td>
+                    <tr class="table-row-item flex flex-col items-center justify-center md:table-row border-2 border-solid dark:border-[#232323] hover:bg-slate-50 dark:hover:bg-[#232323]" *ngFor="let anime of list; let i = index">
+                        <td data-label="#" class="table-item text-center py-[5px] md:py-[10px]">{{i + 1}}</td>
+                        <td class="table-item text-center py-[5px] md:py-[10px]"><a routerLink="/anime/{{anime.mal_id}}/{{ anime.title | encodeUri }}"><img [src]="anime.image" class="h-28"></a></td>
+                        <td data-label="Name:&nbsp;" class="max-w-[18ch] table-item text-center py-[5px] md:py-[10px]">
+                            <a class="font-semibold "[style.color]="getRandomColor(anime.mal_id)" routerLink="/anime/{{anime.mal_id}}/{{ anime.title | encodeUri }}">
+                                {{anime.title}}
+                            </a>
+                        </td>
+                        <td data-label="Source:&nbsp;" class="table-item text-center py-[5px] md:py-[10px]">{{anime.source}}</td>
+                        <td data-label="Aired:&nbsp;" class="table-item text-center py-[5px] md:py-[10px]">{{anime.aired}}</td>
+                        <td data-label="Score:&nbsp;" class="table-item text-center py-[5px] md:py-[10px]">{{anime.score}}</td>
+                        <td class="table-item text-center py-[5px] md:py-[10px]"><button (click)="toggle(anime)" class="btn btn-primary">{{removedTempStates[anime.mal_id] ? 'Undo' : 'Remove Anime'}}</button></td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
     <ng-container *ngIf="!(animeList | async) || (animeList | async)?.length == 0">
-        <div class="empty-block">
-           <p>Nothing here yet</p> 
+        <div class="text-center mt-[10%]">
+           <p class="text-[3rem]">Nothing here yet</p> 
         </div>
     </ng-container>
 </ng-container>

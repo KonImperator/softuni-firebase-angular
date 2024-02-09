@@ -1,24 +1,44 @@
 <header>
-<nav class="navbar">
-    <div class="navbar-start">
-        <a class="navbar-item logo" routerLink="/">
-            <h1 class="dark:text-primary-dark text-primary-light">Anime Galaxy</h1>
+<nav class="navbar flex p-0 min-h-[5rem]">
+    <div class="navbar-start basis-1/3">
+        <a routerLink="/">
+            <div class="w-24">
+                <img class="block md:hidden" src="/assets/site-logo.png" alt="site logo">
+            </div>
+            <h1 class="hidden md:block dark:text-primary-dark leading-7 text-primary-light">Anime Galaxy</h1>
         </a>
     </div>
-    <div class="navbar-center">
-        <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/">Home</a>
-        <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/anime">Anime</a>
-        <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/anime/genre">Genres</a>
-        <ng-container *ngIf="!(user$ | async) && !(isLoading$ | async)">
-            <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/user/login">Login</a>
-            <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/user/register">Register</a>
-        </ng-container>
+    
+    <div class="navbar-center basis-1/3">
+        <div class="md:hidden dropdown-container justify-center">
+            <div class="dropdown">
+                <label class="btn btn-solid-primary my-2 text-[2rem]" tabindex="0">☰</label>
+                <div class="dropdown-menu dropdown-menu-bottom-center">
+                    <a class="dropdown-item text-sm text-center" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="dropdown-active" routerLink="/">Home</a>
+                    <a class="dropdown-item text-sm text-center" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="dropdown-active" routerLink="/anime">Anime</a>
+                    <a class="dropdown-item text-sm text-center" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="dropdown-active" routerLink="/anime/genre">Genres</a>
+                    <ng-container *ngIf="!(user$ | async) && !(isLoading$ | async)">
+                        <a class="dropdown-item text-sm text-center" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="dropdown-active" routerLink="/user/login">Login</a>
+                        <a class="dropdown-item text-sm text-center" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="dropdown-active" routerLink="/user/register">Register</a>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="nav-wrapper hidden md:navbar-center">
+            <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/">Home</a>
+            <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/anime">Anime</a>
+            <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/anime/genre">Genres</a>
+            <ng-container *ngIf="!(user$ | async) && !(isLoading$ | async)">
+                <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/user/login">Login</a>
+                <a class="navbar-item" [routerLinkActiveOptions]="{exact: true}" routerLinkActive="active" routerLink="/user/register">Register</a>
+            </ng-container>
+        </div>
     </div>
-    <div class="navbar-end">
+    <div class="navbar-end basis-1/3 justify-end pr-[20px]">
         <ng-container *ngIf="user$ | async as user; else AnonUser">
             <div *ngIf="!(isLoading$ | async)" class="avatar avatar-ring avatar-md">
                 <div class="dropdown-container">
-                    <div class="dropdown dropdown-hover">
+                    <div class="dropdown md:dropdown-hover">
                         <label class="btn btn-ghost flex cursor-pointer px-0" tabindex="0">
                             <div class="avatar avatar-md avatar-ring-primary w-12 h-12">
                                 <img [src]="user.photoURL ? user.photoURL : '/assets/avatars/avatar-5-onepiece.jpg'" alt="avatar" />

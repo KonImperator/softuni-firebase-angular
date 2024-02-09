@@ -4,7 +4,7 @@
     <app-search></app-search>
 <ng-container *ngIf="animeList$ | async as animeList">
     <app-pagination [animeList]="animeList"></app-pagination>
-    <div class="anime-list">
+    <div class="flex md:justify-around justify-center gap-4 flex-wrap">
         <app-anime-card *ngFor="let anime of animeList.data" [anime]="anime"></app-anime-card>
     </div>
     <app-pagination [animeList]="animeList"></app-pagination>

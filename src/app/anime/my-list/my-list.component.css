@@ -1,21 +1,13 @@
-.anime-list {
-    display: flex;
-    flex-wrap: wrap;
-}
-
 #header-main {
     font-size: x-large;
     text-align: center;
     font-weight: bold;
+    padding: 10px;
 }
 
-.empty-block {
-    display: flex;
-    height: 70vh;
-    justify-content: center;
-    align-items: center;
-}
-
-.empty-block p {
-    font-size: 36px;
+@media screen and (max-width: 768px) {
+    .table-item::before {
+        content: attr(data-label);
+        font-weight: bold;
+    }
 }
